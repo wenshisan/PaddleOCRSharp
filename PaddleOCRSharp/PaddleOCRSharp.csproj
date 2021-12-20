@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40;net461;netstandard2.0;netcoreapp3.1;net5.0;</TargetFrameworks>
+	   <PackageTags>Paddle;OCR</PackageTags>
+	  <IsPublishable>False</IsPublishable>
+	  <Authors>raoyutian</Authors>
+	  <Company />
+	  <Description>OCR  based on paddleOCR for .Net;基于PaddleOCR的适用于.net的OCR。</Description>
+	  <PackageProjectUrl> </PackageProjectUrl>
+	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	  <AssemblyVersion>1.0.0</AssemblyVersion>
+	  <FileVersion>1.0.0</FileVersion>
+	  <Version>1.0.0</Version>
+	  <Platforms>anyCPU;x64</Platforms>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <RepositoryUrl>https://gitee.com/raoyutian/paddle-ocrsharp</RepositoryUrl>
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netcoreapp3.1' Or '$(TargetFramework)' == 'net5.0' ">
+    <PackageReference Include="System.Drawing.Common">
+      <Version>6.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+	 <ItemGroup>
+    <None  Include="$(SolutionDir)PaddleOCRLib\**" >
+		<Pack>true</Pack>
+        <PackageCopyToOutput>true</PackageCopyToOutput>
+	   <PackagePath>contentFiles\any\any\</PackagePath>
+    </None>
+  </ItemGroup>
+	 
+	 <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="XCopy /E /Y &quot;$(SolutionDir)PaddleOCRLib\&quot; &quot;$(TargetDir)\&quot;" />
+  </Target>
+ 
+</Project>
