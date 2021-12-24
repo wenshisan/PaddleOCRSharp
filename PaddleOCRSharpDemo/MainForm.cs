@@ -39,7 +39,7 @@ namespace PaddleOCRSharpDemo
             richTextBox1.Clear();
             if (bmp == null ) return; ;
  
-           OCRResult ocrResult= PaddleOCRHelper.DetectText(bmp);
+           OCRResult ocrResult= PaddleOCRHelper.DetectText(bmp,null);
 
             foreach (var item in ocrResult.TextBlocks)
             {
@@ -57,7 +57,7 @@ namespace PaddleOCRSharpDemo
             {
                 bmp =(Bitmap) screenCapturer.Image;
                 pictureBox1.BackgroundImage = bmp;
-                OCRResult ocrResult = PaddleOCRHelper.DetectText(bmp);
+                OCRResult ocrResult = PaddleOCRHelper.DetectText(bmp,null) ;
                 foreach (var item in ocrResult.TextBlocks)
                 {
                     richTextBox1.AppendText(item.Text + "\n");
@@ -78,7 +78,7 @@ namespace PaddleOCRSharpDemo
                 pictureBox1.BackgroundImage = bmp;
                 richTextBox1.Hide();
             
-                var ocrResult = PaddleOCRHelper.DetectStructure(bmp);
+                var ocrResult = PaddleOCRHelper.DetectStructure(bmp,null);
                
                 int rowcount = ocrResult.RowCount;
                 int colcount = ocrResult.ColCount;

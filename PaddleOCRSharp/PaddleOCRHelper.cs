@@ -10,6 +10,15 @@ namespace PaddleOCRSharp
     /// </summary>
     public static class PaddleOCRHelper
     {
+        /// <summary>
+        /// Gitee（码云）项目地址
+        /// </summary>
+        public static string GiteeUrl => "https://gitee.com/raoyutian/paddle-ocrsharp";
+        /// <summary>
+        /// Github项目地址
+        /// </summary>
+        public static string GithubUrl => "https://github.com/raoyutian/PaddleOCRSharp";
+
         [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         private static extern int Detect(string modelPath_det_infer, string modelPath_cls_infer,
             string modelPath_rec_infer, string keys, string imagefile, OCRParameter parameter, out IntPtr pOCResult);
@@ -41,30 +50,36 @@ namespace PaddleOCRSharp
         }
 
         private static float scale = 1.0f;
-        private static OCRResult DetectText(string imagefile, OCRParameter parameter = null)
+        /// <summary>
+        /// 文本识别
+        /// </summary>
+        /// <param name="imagefile">图像文件</param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public static OCRResult DetectText(string imagefile, OCRModelConfig modelConfig,  OCRParameter parameter = null)
         {
             if (!System.IO.File.Exists(imagefile)) throw new Exception($"文件{imagefile}不存在");
             if (parameter == null) parameter = new OCRParameter();
-           
+
             //模型库文件夹
-            string modelPathroot = Environment.CurrentDirectory + @"\inference";
-            var modelPathdata = new
+
+            if (modelConfig == null)
             {
-                modelPath_det_infer = modelPathroot + @"\ch_PP-OCRv2_det_infer",
-                modelPath_cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer",
-                modelPath_rec_infer = modelPathroot + @"\ch_PP-OCRv2_rec_infer",
-                keys = modelPathroot + @"\ppocr_keys.txt",
-                imagefile = imagefile
-            };
-
+                string root =System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
+                modelConfig = new OCRModelConfig();
+                string modelPathroot = root + @"\inference";
+                modelConfig.det_infer = modelPathroot + @"\ch_PP-OCRv2_det_infer";
+                modelConfig.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
+                modelConfig.rec_infer = modelPathroot + @"\ch_PP-OCRv2_rec_infer";
+                modelConfig. keys = modelPathroot + @"\ppocr_keys.txt";
+            }
             IntPtr ptrResult;
-            int textCount = Detect(modelPathdata.modelPath_det_infer, modelPathdata.modelPath_cls_infer,
-                modelPathdata.modelPath_rec_infer, modelPathdata.keys, modelPathdata.imagefile, new OCRParameter(), out ptrResult);
+            int textCount = Detect(modelConfig.det_infer, modelConfig.cls_infer,
+                modelConfig.rec_infer, modelConfig.keys, imagefile, new OCRParameter(), out ptrResult);
             if (textCount <= 0)
-                return null;
-
+                return new OCRResult();
             if (ptrResult == IntPtr.Zero)
-                return null;
+                return new OCRResult();
 
             OCRResult oCRResult = new OCRResult();
             IntPtr ptrFree= ptrResult;
@@ -107,6 +122,7 @@ namespace PaddleOCRSharp
                 FreeDetectMem(ptrFree);
             }
             oCRResult.TextBlocks.Reverse();
+           
             return oCRResult;
         }
 
@@ -116,7 +132,7 @@ namespace PaddleOCRSharp
         /// <param name="image">图像</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        public static OCRResult DetectText(Image image, OCRParameter parameter = null)
+        public static OCRResult DetectText(Image image, OCRModelConfig modelConfig, OCRParameter parameter = null)
         {
             if (image == null) throw new ArgumentNullException("image");
             if (!Environment.Is64BitProcess) throw new Exception("暂不支持32位程序使用本OCR");
@@ -139,8 +155,11 @@ namespace PaddleOCRSharp
             imagefile = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".bmp";
             bitmap.Save(imagefile);
             bitmap.Dispose();
+            GC.Collect();
             #endregion
-            OCRResult result= DetectText(imagefile, parameter);
+            OCRResult result= DetectText(imagefile, modelConfig, parameter);
+            System.IO.File.Delete(imagefile);
+            if (result == null) return new OCRResult();
             #region 返回结果的区域需要还原比例
             int padding = 50;
             if (parameter != null) padding = parameter.Padding;
@@ -165,12 +184,29 @@ namespace PaddleOCRSharp
         }
 
         /// <summary>
+        ///文本识别
+        /// </summary>
+        /// <param name="imagebyte">图像内存流</param>
+        /// <param name="parameter">参数</param>
+        /// <returns></returns>
+        public static OCRResult DetectText(byte[] imagebyte, OCRModelConfig modelConfig, OCRParameter parameter = null)
+        {
+            if (imagebyte == null) throw new ArgumentNullException("imagebyte");
+            if (!Environment.Is64BitProcess) throw new Exception("暂不支持32位程序使用本OCR");
+            string imagefile = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".bmp";
+            System.IO.File.WriteAllBytes(imagefile, imagebyte);
+            OCRResult result = DetectText(imagefile, modelConfig, parameter);
+            System.IO.File.Delete(imagefile);
+            if (result == null) return new OCRResult();
+            return result;
+        }
+        /// <summary>
         ///结构化文本识别(临时解决方案，需要的请研究官方的结构化识别)
         /// </summary>
         /// <param name="image">图像</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        public static OCRStructureResult DetectStructure(Image image, OCRParameter parameter = null)
+        public static OCRStructureResult DetectStructure(Image image, OCRModelConfig modelConfig, OCRParameter parameter = null)
         {
             if (image == null) throw new ArgumentNullException("image");
             if (!Environment.Is64BitProcess) throw new Exception("暂不支持32位程序使用本OCR");
@@ -193,8 +229,11 @@ namespace PaddleOCRSharp
             imagefile = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".bmp";
             bitmap.Save(imagefile);
             bitmap.Dispose();
+            GC.Collect();
             #endregion
-            OCRResult result = DetectText(imagefile, parameter);
+            OCRResult result = DetectText(imagefile, modelConfig,parameter);
+           
+            if (result == null) return new OCRStructureResult();
             #region 返回结果的区域需要还原比例
             int padding = 0;
             //if (parameter != null) padding = parameter.Padding;
