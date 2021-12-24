@@ -1,15 +1,19 @@
 # PaddleOCRSharp
 
 # 介绍
-本项目是一个基于PaddleOCR的C++代码修改并封装的.NET的类库。包含文本识别、文本检测、基于文本检测结果的统计分析的表格识别功能，同时针对小图识别不准的情况下，做了优化，提高识别准确率。项目封装极其简化，实际调用仅一行代码，极大的方便了中下游开发者的使用和降低了PaddleOCR的使用入门级别，同时提供不同的.NET框架使用，方便各个行业应用开发与部署。
+ 本项目是一个基于PaddleOCR的C++代码修改并封装的.NET的类库。包含文本识别、文本检测、基于文本检测结果的统计分析的表格识别功能，同时针对小图识别不准的情况下，做了优化，提高识别准确率。项目封装极其简化，实际调用仅一行代码，极大的方便了中下游开发者的使用和降低了PaddleOCR的使用入门级别，同时提供不同的.NET框架使用，方便各个行业应用开发与部署。
 
-PaddleOCR.dll文件是基于开源项目PaddleOCR的C++代码修改的C++动态库，基于opencv的x64编译而成的。
+其中PaddleOCR.dll文件是基于开源项目PaddleOCR的C++代码修改而成的C++动态库，基于opencv的x64编译而成的。
 
+[百度飞桨PaddleOCR项目地址（码云）](https://gitee.com/paddlepaddle/PaddleOCR)
+
+[百度飞桨PaddleOCR项目地址（GitHub）](https://github.com/paddlepaddle/PaddleOCR)
 
 模型库支持轻量版（本项目）、服务器版模型库（更准确），可以自行更改模型库适用实际需求。
 
-[模型下载地址 百度飞桨PaddleOCR地址](https://gitee.com/paddlepaddle/PaddleOCR)
+[百度飞桨PaddleOCR模型下载地址](https://gitee.com/paddlepaddle/PaddleOCR/blob/release/2.4/doc/doc_ch/models_list.md)
  
+关于源码编译，建议采用vs2019及以上版本编译
 
 # 版本更新
 ### v1.1.0
@@ -89,7 +93,7 @@ PaddleOCRSharp  //.NET封装库
             if (ofd.ShowDialog() != DialogResult.OK) return;
             var imagebyte = File.ReadAllBytes(ofd.FileName);
             Bitmap bitmap = new Bitmap(new MemoryStream(imagebyte));
-            OCRResult ocrResult = PaddleOCRSharp.PaddleOCRHelper.DetectText(bitmap);
+            OCRResult ocrResult = PaddleOCRSharp.PaddleOCRHelper.DetectText(bitmap,null);
             if (ocrResult != null)
             {
                 MessageBox.Show(ocrResult.Text,"识别结果");
