@@ -101,6 +101,6 @@ PaddleOCRSharp  //.NET封装库
 ```
 
 # 喜欢的给个星，谢谢
-# QQ交流
+# QQ交流群：318860399
  ![输入图片说明](PaddleOCRSharp/PaddleOCRSharp%E4%BA%A4%E6%B5%81%E7%BE%A4%E7%BE%A4%E8%81%8A%E4%BA%8C%E7%BB%B4%E7%A0%81.png)
 
