@@ -77,7 +77,7 @@ namespace PaddleOCRSharpDemo
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(20);
-            this.pictureBox1.Size = new System.Drawing.Size(442, 307);
+            this.pictureBox1.Size = new System.Drawing.Size(542, 504);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -87,7 +87,7 @@ namespace PaddleOCRSharpDemo
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(460, 385);
+            this.richTextBox1.Size = new System.Drawing.Size(565, 587);
             this.richTextBox1.TabIndex = 5;
             this.richTextBox1.Text = "";
             // 
@@ -106,17 +106,17 @@ namespace PaddleOCRSharpDemo
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainer1.Panel2.Controls.Add(this.richTextBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(906, 385);
-            this.splitContainer1.SplitterDistance = 442;
+            this.splitContainer1.Size = new System.Drawing.Size(1111, 587);
+            this.splitContainer1.SplitterDistance = 542;
             this.splitContainer1.TabIndex = 6;
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 78);
+            this.panel2.Location = new System.Drawing.Point(0, 83);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(442, 307);
+            this.panel2.Size = new System.Drawing.Size(542, 504);
             this.panel2.TabIndex = 8;
             // 
             // panel1
@@ -128,12 +128,12 @@ namespace PaddleOCRSharpDemo
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(442, 78);
+            this.panel1.Size = new System.Drawing.Size(542, 83);
             this.panel1.TabIndex = 7;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(87, 42);
+            this.button4.Location = new System.Drawing.Point(239, 6);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(80, 30);
             this.button4.TabIndex = 5;
@@ -143,7 +143,7 @@ namespace PaddleOCRSharpDemo
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(3, 41);
+            this.button3.Location = new System.Drawing.Point(156, 4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(77, 32);
             this.button3.TabIndex = 4;
@@ -159,7 +159,7 @@ namespace PaddleOCRSharpDemo
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(460, 385);
+            this.dataGridView1.Size = new System.Drawing.Size(565, 587);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.Visible = false;
             // 
@@ -167,10 +167,10 @@ namespace PaddleOCRSharpDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 385);
+            this.ClientSize = new System.Drawing.Size(1111, 587);
             this.Controls.Add(this.splitContainer1);
             this.Name = "MainForm";
-            this.Text = "OCR工具 by 饶玉田";
+            this.Text = "PaddleOCRSharpDemo by 饶玉田 QQ群：318860399";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
