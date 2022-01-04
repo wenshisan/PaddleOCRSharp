@@ -30,10 +30,7 @@ namespace PaddleOCRSharp
         #endregion
 
         #region 文本识别
-          ~PaddleOCREngine()
-        {
-            FreeEngine(Engine);
-        }
+        
         /// <summary>
         /// PaddleOCR识别引擎对象初始化
         /// </summary>
