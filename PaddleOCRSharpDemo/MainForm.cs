@@ -59,16 +59,17 @@ namespace PaddleOCRSharpDemo
 
 
             //OCR参数
-            //OCRParameter oCRParameter = new OCRParameter();
-            //oCRParameter.numThread = 8;
-            //oCRParameter.Enable_mkldnn = 1;
-    
+            OCRParameter oCRParameter = new OCRParameter();
+            oCRParameter.numThread = 6;
+            oCRParameter.Enable_mkldnn = 1;
+
             OCRModelConfig config = null;
-            OCRParameter oCRParameter = null;
+            //OCRParameter oCRParameter = null;
             OCRResult ocrResult = new OCRResult();
             using (PaddleOCREngine engine = new PaddleOCREngine(config, oCRParameter))
             {
                 ocrResult = engine.DetectText(bmp);
+
             }
             foreach (var item in ocrResult.TextBlocks)
             {
@@ -91,15 +92,22 @@ namespace PaddleOCRSharpDemo
             {
                 bmp =(Bitmap) screenCapturer.Image;
                 pictureBox1.BackgroundImage = bmp;
-                OCRResult ocrResult = new OCRResult();
-                using (PaddleOCREngine engine = new PaddleOCREngine(null, null))
+                try
                 {
-                    ocrResult = engine.DetectText(bmp);
+                    OCRResult ocrResult = new OCRResult();
+                    using (PaddleOCREngine engine = new PaddleOCREngine(null, null))
+                    {
+                        ocrResult = engine.DetectText(bmp);
+                        richTextBox1.AppendText(ocrResult.Text + "\n");
+                    }
+                    
                 }
-                foreach (var item in ocrResult.TextBlocks)
+                catch (Exception ex)
                 {
-                    richTextBox1.AppendText(item.Text + "\n");
+
+                    
                 }
+               
             }
             this.Show();
         }

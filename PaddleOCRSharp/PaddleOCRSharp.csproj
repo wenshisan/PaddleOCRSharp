@@ -2,19 +2,19 @@
 
   <PropertyGroup>
     <TargetFrameworks>net40;net461;netstandard2.0;netcoreapp3.1;net5.0;</TargetFrameworks>
-	   <PackageTags>Paddle;OCR</PackageTags>
+	   <PackageTags>Paddle;OCR;AI;CV;PaddleOCR;character recognition;NET;Csharp</PackageTags>
 	  <IsPublishable>False</IsPublishable>
 	  <Authors>raoyutian</Authors>
 	  <Company />
-	  <Description>OCR  based on paddleOCR for .Net;基于PaddleOCR的适用于.net的OCR。</Description>
-	  <PackageProjectUrl> </PackageProjectUrl>
+	  <Description>This project is based on paddleocr package Net OCR class library. Including character recognition, text detection and table OCR recognition based on statistical analysis of text detection results. It can be used without network and has high recognition accuracy.</Description>
+	  <PackageProjectUrl>https://github.com/raoyutian/PaddleOCRSharp</PackageProjectUrl>
 	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>1.2.0</AssemblyVersion>
-	  <FileVersion>1.2.0</FileVersion>
-	  <Version>1.2.0</Version>
+	  <AssemblyVersion>1.2.1</AssemblyVersion>
+	  <FileVersion>1.2.1</FileVersion>
+	  <Version>1.2.1</Version>
 	  <Platforms>x64</Platforms>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <RepositoryUrl>https://gitee.com/raoyutian/paddle-ocrsharp</RepositoryUrl>
+	  <RepositoryUrl>https://github.com/raoyutian/PaddleOCRSharp</RepositoryUrl>
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </PropertyGroup>
 
