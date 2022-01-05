@@ -162,7 +162,7 @@ int main()
             OCRResult ocrResult = new OCRResult();
             using (PaddleOCREngine engine = new PaddleOCREngine(config, oCRParameter))
             {
-                ocrResult = engine.DetectText(bmp);
+                ocrResult = engine.DetectText(bitmap);
             }
             if (ocrResult != null)
             {
