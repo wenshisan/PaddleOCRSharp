@@ -25,11 +25,40 @@ namespace PaddleOCRSharpDemo
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+           
+        }
+       
+        private void button2_Click(object sender, EventArgs e)
+        {
+           
+        }
+       
+        private void button3_Click(object sender, EventArgs e)
+        {
+          
+        }
+       
+        private void button4_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+           
+        }
+        /// <summary>
+        /// 打开本地图片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripopenFile_Click(object sender, EventArgs e)
+        {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "*.*|*.bmp;*.jpg;*.jpeg;*.tiff;*.tiff;*.png";
             if (ofd.ShowDialog() != DialogResult.OK) return;
             var imagebyte = File.ReadAllBytes(ofd.FileName);
-            bmp= new Bitmap(new MemoryStream(imagebyte));
+            bmp = new Bitmap(new MemoryStream(imagebyte));
             pictureBox1.BackgroundImage = bmp;
         }
         /// <summary>
@@ -37,12 +66,12 @@ namespace PaddleOCRSharpDemo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button2_Click(object sender, EventArgs e)
+        private void toolStripLabel1_Click(object sender, EventArgs e)
         {
             richTextBox1.Clear();
             richTextBox1.Show();
             dataGridView1.Hide();
-            if (bmp == null ) return;
+            if (bmp == null) return;
 
             //旧代码,将在下一版本移除
             //OCRResult ocrResult = PaddleOCRHelper.DetectText(bmp, null);
@@ -62,7 +91,7 @@ namespace PaddleOCRSharpDemo
             OCRParameter oCRParameter = new OCRParameter();
             oCRParameter.numThread = 6;
             oCRParameter.Enable_mkldnn = 1;
-
+            oCRParameter.use_angle_cls=1;
             OCRModelConfig config = null;
             //OCRParameter oCRParameter = null;
             OCRResult ocrResult = new OCRResult();
@@ -81,7 +110,7 @@ namespace PaddleOCRSharpDemo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button3_Click(object sender, EventArgs e)
+        private void toolStripLabel2_Click(object sender, EventArgs e)
         {
             this.Hide();
             richTextBox1.Clear();
@@ -90,7 +119,7 @@ namespace PaddleOCRSharpDemo
             ScreenCapturer.ScreenCapturerTool screenCapturer = new ScreenCapturer.ScreenCapturerTool();
             if (screenCapturer.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                bmp =(Bitmap) screenCapturer.Image;
+                bmp = (Bitmap)screenCapturer.Image;
                 pictureBox1.BackgroundImage = bmp;
                 try
                 {
@@ -100,14 +129,14 @@ namespace PaddleOCRSharpDemo
                         ocrResult = engine.DetectText(bmp);
                         richTextBox1.AppendText(ocrResult.Text + "\n");
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
 
-                    
+
                 }
-               
+
             }
             this.Show();
         }
@@ -116,17 +145,17 @@ namespace PaddleOCRSharpDemo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button4_Click(object sender, EventArgs e)
+        private void toolStripLabel3_Click(object sender, EventArgs e)
         {
             this.Hide();
-            
+
             ScreenCapturer.ScreenCapturerTool screenCapturer = new ScreenCapturer.ScreenCapturerTool();
             if (screenCapturer.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 bmp = (Bitmap)screenCapturer.Image;
                 pictureBox1.BackgroundImage = bmp;
                 richTextBox1.Hide();
-            
+
                 OCRStructureResult ocrResult = new OCRStructureResult();
                 using (PaddleOCREngine engine = new PaddleOCREngine(null, null))
                 {
@@ -151,6 +180,19 @@ namespace PaddleOCRSharpDemo
                 dataGridView1.Show();
             }
             this.Show();
+        }
+
+        private void toolStripLabel4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "*.*|*.bmp;*.jpg;*.jpeg;*.tiff;*.tiff;*.png";
+            if (ofd.ShowDialog() != DialogResult.OK) return;
+            PaddleOCREngine.Detect(null, ofd.FileName);
+
+            string file = Environment.CurrentDirectory + "\\ocr_vis.png";
+            var imagebyte = File.ReadAllBytes(file);
+            bmp = new Bitmap(new MemoryStream(imagebyte));
+            pictureBox1.BackgroundImage = bmp;
         }
     }
 }

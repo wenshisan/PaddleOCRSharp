@@ -22,6 +22,10 @@ namespace PaddleOCRSharp
         internal static extern int FreeEngine(IntPtr enginePtr);
         [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         internal static extern int FreeDetectResult(IntPtr intPtr);
+
+
+        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        internal static extern void DetectImage(string det_infer, string imagefile, OCRParameter parameter);
         #endregion
 
         #region 属性
@@ -68,14 +72,24 @@ namespace PaddleOCRSharp
             {
                 int textBlockAmount = (int)Marshal.PtrToStructure(ptrResult, typeof(int));
                 //总textBlock个数
+
+#if NET35
+                ptrResult = (IntPtr)(ptrResult.ToInt64() + 4);
+#else
                 ptrResult = ptrResult + 4;
+#endif
+
                 IntPtr ptrtextBlock = (IntPtr)Marshal.PtrToStructure(ptrResult, typeof(IntPtr));
                 ptrResult = ptrtextBlock;
                 for (int i = 0; i < textBlockAmount; i++)
                 {
                     //文本长度
                     int textBlockLen = (int)Marshal.PtrToStructure(ptrResult, typeof(int));
+#if NET35
+                    ptrResult = (IntPtr)(ptrResult.ToInt64() + 4);
+#else
                     ptrResult = ptrResult + 4;
+#endif
 
                     //文本指针
                     IntPtr textPointValue = (IntPtr)Marshal.PtrToStructure(ptrResult, typeof(IntPtr));
@@ -85,12 +99,24 @@ namespace PaddleOCRSharp
                     textBlock.Text = Marshal.PtrToStringUni(textPointValue);
 
                     //文本四个点
-                    ptrResult = ptrResult + 8;
+#if NET35
+                    ptrResult = (IntPtr)(ptrResult.ToInt64() + 8);
+#else
+                    ptrResult = ptrResult +8;
+#endif
                     for (int p = 0; p < 4; p++)
                     {
                         OCRPoint oCRPoint = (OCRPoint)Marshal.PtrToStructure(ptrResult, typeof(OCRPoint));
                         textBlock.BoxPoints.Add(new Point(oCRPoint.x, oCRPoint.y));
+
+
+#if NET35
+                        ptrResult = (IntPtr)(ptrResult.ToInt64() + Marshal.SizeOf(typeof(OCRPoint)));
+#else
                         ptrResult = ptrResult + Marshal.SizeOf(typeof(OCRPoint));
+#endif
+
+
                     }
                     oCRResult.TextBlocks.Add(textBlock);
                 }
@@ -115,7 +141,11 @@ namespace PaddleOCRSharp
         public OCRResult DetectText(Image image)
         {
             if (image == null) throw new ArgumentNullException("image");
+#if NET35
+#else
             if (!Environment.Is64BitProcess) throw new Exception("暂不支持32位程序使用本OCR");
+#endif
+
             string imagefile = "";
             #region 小图执行放大，分段线性缩放
             if (image.Width <= 50 || image.Height <= 50)
@@ -167,10 +197,13 @@ namespace PaddleOCRSharp
         /// <param name="imagebyte">图像内存流</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        public   OCRResult DetectText(byte[] imagebyte)
+        public OCRResult DetectText(byte[] imagebyte)
         {
             if (imagebyte == null) throw new ArgumentNullException("imagebyte");
+#if NET35
+#else
             if (!Environment.Is64BitProcess) throw new Exception("暂不支持32位程序使用本OCR");
+#endif
             string imagefile = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".bmp";
             System.IO.File.WriteAllBytes(imagefile, imagebyte);
             OCRResult result = DetectText(imagefile);
@@ -191,7 +224,10 @@ namespace PaddleOCRSharp
         public OCRStructureResult DetectStructure(Image image)
         {
             if (image == null) throw new ArgumentNullException("image");
+#if NET35
+#else
             if (!Environment.Is64BitProcess) throw new Exception("暂不支持32位程序使用本OCR");
+#endif
             string imagefile = "";
             #region 小图执行放大，分段线性缩放
             if (image.Width <= 50 || image.Height <= 50)
@@ -271,7 +307,14 @@ namespace PaddleOCRSharp
                     StructureCells cell = new StructureCells();
                     cell.Row = i;
                     cell.Col = j;
+
+#if NET35
+                    cell.Text = string.Join("", texts);
+#else
                     cell.Text = string.Join<string>("", texts);
+#endif
+
+
                     cell.TextBlocks = textBlocks.ToList();
                     structureResult.Cells.Add(cell);
                 }
@@ -301,8 +344,33 @@ namespace PaddleOCRSharp
         }
         #endregion
 
+
+
+        /// <summary>
+        ///仅文本预测，在当前文件夹下保存文件名为ocr_vis.png的预测结果
+        /// </summary>
+        /// <param name="config">模型配置对象，如果为空则按默认值</param>
+        /// <param name="imagefile">检测图像全路径</param>
+        /// <param name="parameter">参数</param>
+        public static void Detect(OCRModelConfig config, string imagefile, OCRParameter parameter=null)
+        {
+            if (parameter == null) parameter = new OCRParameter();
+            if (config == null)
+            {
+                string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
+                config = new OCRModelConfig();
+                string modelPathroot = root + @"\inference";
+                config.det_infer = modelPathroot + @"\ch_PP-OCRv2_det_infer";
+                config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
+                config.rec_infer = modelPathroot + @"\ch_PP-OCRv2_rec_infer";
+                config.keys = modelPathroot + @"\ppocr_keys.txt";
+            }
+            DetectImage(config.det_infer, imagefile, parameter);
+        }
+
+
         #region Dispose
-         
+
         public void Dispose()
         {
             FreeEngine(Engine);

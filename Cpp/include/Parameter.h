@@ -18,28 +18,52 @@
 using namespace std;
 struct OCRParameter
 {
+	//通用参数
+	bool use_gpu;
+	int gpu_id;
+	int gpu_mem;
 	int numThread;
+	bool enable_mkldnn;
+	
+	//检测模型相关
 	int    Padding;
 	int    MaxSideLen;
 	float  BoxScoreThresh;
 	float   BoxThresh;
 	float   UnClipRatio;
+	bool use_polygon_score;
+	bool visualize;
 	bool    DoAngle;
 	bool   MostAngle;
-	bool enable_mkldnn;
-	bool use_gpu;
+	
+	//方向分类器相关
+	bool use_angle_cls;
+	float   cls_thresh;
+
 	OCRParameter()
 	{
+		//通用参数
+		use_gpu = false;
+		gpu_id = 0;
+		gpu_mem = 4000;
 		numThread = 2;
+		enable_mkldnn = true;
+		
+		//检测模型相关
 		Padding = 50;
 		MaxSideLen = 2048;
-		BoxScoreThresh = 0.618f;
 		BoxThresh = 0.3f;
-		UnClipRatio = 2.0f;
+		BoxScoreThresh = 0.618f;
+		UnClipRatio = 1.6f;
+		use_polygon_score = false;
+		visualize = false;
+
 		DoAngle = true;
 		MostAngle = true;
-		enable_mkldnn = true;
-		use_gpu = false;
+
+		//方向分类器相关
+		use_angle_cls = false;
+		cls_thresh = 0.9f;
 	}
 };
 

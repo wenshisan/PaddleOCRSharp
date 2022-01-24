@@ -35,6 +35,15 @@ extern "C" {
 	/// </summary>
 	/// <param name="pOCRResult"></param>
 	__declspec(dllimport) void FreeDetectResult(LpOCRResult pOCRResult);
+	/// <summary>
+	/// PaddleOCR检测
+	/// </summary>
+	/// <param name="det_infer"></param>
+	/// <param name="imagefile"></param>
+	/// <param name="parameter"></param>
+	/// <returns></returns>
+	__declspec(dllimport) void DetectImage(char* modelPath_det_infer, char* imagefile, OCRParameter parameter);
+
 };
 
 std::wstring string2wstring(const std::string& s)

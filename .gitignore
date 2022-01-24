@@ -18,3 +18,6 @@
 /PaddleOCRSharp/bin/x64/Release
 /PaddleOCRSharpDemo/bin/x64/Release
 /PaddleOCRSharpDemo/bin/x64/Debug
+/PaddleOCRSharp/bin/x64/Debug
+/PaddleOCRCppDemo/x64/Debug
+/x64/Debug

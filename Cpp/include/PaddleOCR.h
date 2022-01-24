@@ -20,5 +20,7 @@ extern "C" {
 	__declspec(dllexport) int  Detect(OCREngine* engine, char* imagefile, LpOCRResult* pOCRResult);
 	__declspec(dllexport) void FreeEngine(OCREngine* engine);
 	__declspec(dllexport) void FreeDetectResult(LpOCRResult pOCRResult);
+	__declspec(dllexport) void DetectImage(char* modelPath_det_infer, char* imagefile, OCRParameter parameter);
+	
 };
 
