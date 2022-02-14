@@ -109,15 +109,22 @@ namespace PaddleOCRSharp
                         OCRPoint oCRPoint = (OCRPoint)Marshal.PtrToStructure(ptrResult, typeof(OCRPoint));
                         textBlock.BoxPoints.Add(new Point(oCRPoint.x, oCRPoint.y));
 
-
 #if NET35
                         ptrResult = (IntPtr)(ptrResult.ToInt64() + Marshal.SizeOf(typeof(OCRPoint)));
 #else
                         ptrResult = ptrResult + Marshal.SizeOf(typeof(OCRPoint));
 #endif
+                  }
 
+                    //得分
+                    float score = (float)Marshal.PtrToStructure(ptrResult, typeof(float));
+                    textBlock.Score = score;
+#if NET35
+                    ptrResult = (IntPtr)(ptrResult.ToInt64() + 4);
+#else
+                    ptrResult = ptrResult + 4;
+#endif
 
-                    }
                     oCRResult.TextBlocks.Add(textBlock);
                 }
             }

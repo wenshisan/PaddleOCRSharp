@@ -68,11 +68,14 @@ struct OCRParameter
 };
 
 struct Textblock {
+	
 	std::wstring textblock;
 	std::vector<std::vector<int>> box;
-	Textblock(wstring textblock, std::vector<std::vector<int>> box) {
+	float score;
+	Textblock(wstring textblock, std::vector<std::vector<int>> box,float score) {
 		this->textblock = textblock;
 		this->box = box;
+		this->score = score;
 	}
 };
 
@@ -90,9 +93,12 @@ struct _OCRText {
 	char* ptext;
 	//一个textblock四个点
 	_OCRTextPoint points[4];
+	//得分
+	float score;
 	_OCRText() {
 		textLen = 0;
 		ptext = nullptr;
+		score = 0.0f;
 	}
 };
 

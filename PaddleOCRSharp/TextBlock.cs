@@ -11,5 +11,9 @@ namespace PaddleOCRSharp
     {
         public List<Point> BoxPoints { get; set; } = new List<Point>();
         public string Text { get; set; }
+        /// <summary>
+        /// 得分
+        /// </summary>
+        public float Score { get; set; }
     }
 }

@@ -36,7 +36,6 @@ namespace PaddleOCRSharpDemo
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripopenFile = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
@@ -60,7 +59,7 @@ namespace PaddleOCRSharpDemo
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(20);
-            this.pictureBox1.Size = new System.Drawing.Size(606, 592);
+            this.pictureBox1.Size = new System.Drawing.Size(419, 420);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -70,7 +69,7 @@ namespace PaddleOCRSharpDemo
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(634, 592);
+            this.richTextBox1.Size = new System.Drawing.Size(439, 420);
             this.richTextBox1.TabIndex = 5;
             this.richTextBox1.Text = "";
             // 
@@ -88,8 +87,8 @@ namespace PaddleOCRSharpDemo
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainer1.Panel2.Controls.Add(this.richTextBox1);
-            this.splitContainer1.Size = new System.Drawing.Size(1244, 592);
-            this.splitContainer1.SplitterDistance = 606;
+            this.splitContainer1.Size = new System.Drawing.Size(862, 420);
+            this.splitContainer1.SplitterDistance = 419;
             this.splitContainer1.TabIndex = 6;
             // 
             // panel2
@@ -98,7 +97,7 @@ namespace PaddleOCRSharpDemo
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(606, 592);
+            this.panel2.Size = new System.Drawing.Size(419, 420);
             this.panel2.TabIndex = 8;
             // 
             // dataGridView1
@@ -109,7 +108,7 @@ namespace PaddleOCRSharpDemo
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(634, 592);
+            this.dataGridView1.Size = new System.Drawing.Size(439, 420);
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.Visible = false;
             // 
@@ -117,7 +116,6 @@ namespace PaddleOCRSharpDemo
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripopenFile,
-            this.toolStripLabel1,
             this.toolStripSeparator1,
             this.toolStripLabel2,
             this.toolStripLabel3,
@@ -125,7 +123,7 @@ namespace PaddleOCRSharpDemo
             this.toolStripLabel4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1244, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(862, 25);
             this.toolStrip1.TabIndex = 8;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -133,15 +131,8 @@ namespace PaddleOCRSharpDemo
             // 
             this.toolStripopenFile.Name = "toolStripopenFile";
             this.toolStripopenFile.Size = new System.Drawing.Size(56, 22);
-            this.toolStripopenFile.Text = "浏览图片";
+            this.toolStripopenFile.Text = "本地识别";
             this.toolStripopenFile.Click += new System.EventHandler(this.toolStripopenFile_Click);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(32, 22);
-            this.toolStripLabel1.Text = "识别";
-            this.toolStripLabel1.Click += new System.EventHandler(this.toolStripLabel1_Click);
             // 
             // toolStripSeparator1
             // 
@@ -178,7 +169,7 @@ namespace PaddleOCRSharpDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1244, 617);
+            this.ClientSize = new System.Drawing.Size(862, 445);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "MainForm";
@@ -205,7 +196,6 @@ namespace PaddleOCRSharpDemo
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripopenFile;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;

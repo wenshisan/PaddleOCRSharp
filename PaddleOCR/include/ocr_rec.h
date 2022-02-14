@@ -64,7 +64,7 @@ public:
   // Load Paddle inference model
   void LoadModel(const std::string &model_dir);
 
-  std::wstring Run(cv::Mat &img, std::vector<double> *times);
+  std::wstring Run(cv::Mat &img, std::vector<double> *times, std::vector<float>* scores);
 
 private:
   std::shared_ptr<Predictor> predictor_;

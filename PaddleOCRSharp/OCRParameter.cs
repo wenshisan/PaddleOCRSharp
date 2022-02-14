@@ -57,11 +57,11 @@ namespace PaddleOCRSharp
         /// <summary>
         /// DoAngle 默认1启用
         /// </summary>
-        public byte DoAngle { get; set; } = 1;
+        public byte DoAngle { get; set; } = 0;
         /// <summary>
         /// MostAngle 默认1启用
         /// </summary>
-        public byte MostAngle { get; set; } = 1;
+        public byte MostAngle { get; set; } = 0;
 
 
         /// <summary>
