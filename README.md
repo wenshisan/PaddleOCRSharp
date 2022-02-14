@@ -7,6 +7,10 @@
 
 本项目中PaddleOCR.dll文件是基于开源项目PaddleOCR的C++代码修改而成的C++动态库，基于opencv的x64编译而成的。
 
+支持以下NET框架：
+```
+net35;net40;net461;net48;netstandard2.0;netcoreapp3.1;net5.0;net6.0;
+```
 [百度飞桨PaddleOCR项目地址（码云）](https://gitee.com/paddlepaddle/PaddleOCR)
 
 [百度飞桨PaddleOCR项目地址（GitHub）](https://github.com/paddlepaddle/PaddleOCR)
@@ -18,7 +22,7 @@
  [百度飞桨windows下C++预测库下载地址](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
 
 
- **关于源码编译，建议采用vs2019及以上版本编译，如果遇到无法编译，请切换成release后再切换回debug即可。** 
+ **关于源码编译，建议采用vs2022版本编译，如果遇到无法编译，请切换成release后再切换回debug即可。** 
 
 
 
