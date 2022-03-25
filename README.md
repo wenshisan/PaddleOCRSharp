@@ -83,7 +83,7 @@ net5.0;net6.0;
 ```
 
 
-[全部调用参数](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/PaddleOCRSharp/OCRParameter.cs)
+https://github.com/raoyutian/PaddleOCRSharp/blob/main/PaddleOCRSharp/OCRParameter.cs
 
 [PaddleOCR官方参数](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
 
