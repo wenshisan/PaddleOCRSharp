@@ -1,4 +1,4 @@
-## PaddleOCRSharp       [版本更新记录](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_update.md)
+## PaddleOCRSharp       [版本更新记录](https://github.com/raoyutian/paddle-ocrsharp/blob/main/doc/README_update.md)
 
 ## 一、介绍
 
@@ -82,7 +82,7 @@ net5.0;net6.0;
 </TargetFrameworks>
 ```
 
-[全部调用参数](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/PaddleOCRSharp/OCRParameter.cs)
+[全部调用参数](https://github.com/raoyutian/paddle-ocrsharp/blob/main/PaddleOCRSharp/OCRParameter.cs)
 
 [PaddleOCR官方参数](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
 
@@ -139,9 +139,9 @@ PaddleOCRDemo                //Demo文件夹
 
 ```
 
-[C++示例代码](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
+[C++示例代码](https://github.com/raoyutian/paddle-ocrsharp/blob/main/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
 
 
-## 四、[常见问题与解决方案](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_question.md)
+## 四、[常见问题与解决方案](https://github.com/raoyutian/paddle-ocrsharp/blob/main/doc/README_question.md)
 
 ### 喜欢的就给个星，谢谢！QQ交流群：318860399，有问题可以加QQ群咨询。
