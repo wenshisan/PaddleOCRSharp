@@ -23,7 +23,7 @@ net5.0;net6.0;
 
 OCR识别模型库支持轻量版（本项目部署自带的一种）、服务器版模型库（更准确，需要自行下载），可以自行更改模型库适用实际需求。
 
-[PaddleOCR模型下载地址](https://gitee.com/paddlepaddle/PaddleOCR/blob/dev/doc/doc_ch/models_list.md)
+[PaddleOCR模型下载地址](https://gitee.com/paddlepaddle/PaddleOCR/blob/dygraph/doc/doc_ch/models_list.md)
 
 如果需要修改成服务器版模型库，参考代码如下：(假设服务器版模型库在运行目录的文件夹inferenceserver下)
 
