@@ -1,4 +1,4 @@
-## PaddleOCRSharp       [版本更新记录](https://github.com/raoyutian/paddle-ocrsharp/blob/main/doc/README_update.md)
+## PaddleOCRSharp       [版本更新记录](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update.md)
 
 ## 一、介绍
 
