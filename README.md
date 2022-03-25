@@ -139,9 +139,9 @@ PaddleOCRDemo                //Demo文件夹
 
 ```
 
-[C++示例代码](https://github.com/raoyutian/paddle-ocrsharp/blob/main/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
+[C++示例代码](https://github.com/raoyutian/PaddleOCRSharp/blob/main/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
 
 
-## 四、[常见问题与解决方案](https://github.com/raoyutian/paddle-ocrsharp/blob/main/doc/README_question.md)
+## 四、[常见问题与解决方案](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_question.md)
 
 ### 喜欢的就给个星，谢谢！QQ交流群：318860399，有问题可以加QQ群咨询。
