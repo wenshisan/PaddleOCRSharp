@@ -1,5 +1,16 @@
-﻿using System;
-using System.Drawing;
+﻿// Copyright (c) 2021 raoyutian Authors. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 namespace PaddleOCRSharp
 {
     /// <summary>
@@ -16,63 +27,5 @@ namespace PaddleOCRSharp
         /// </summary>
         public static string GithubUrl => "https://github.com/raoyutian/PaddleOCRSharp";
  
-        /// <summary>
-        /// 文本识别
-        /// </summary>
-        /// <param name="imagefile">图像文件</param>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-       [Obsolete("请用PaddleOCREngine引擎进行文字识别,该方法将在下一版本移除", false)]
-        public static OCRResult DetectText(string imagefile, OCRModelConfig modelConfig,  OCRParameter parameter = null)
-        {
-            using (PaddleOCREngine engine = new PaddleOCREngine(modelConfig, parameter))
-            {
-                return engine.DetectText(imagefile);
-            }
-        }
-
-        /// <summary>
-        ///文本识别
-        /// </summary>
-        /// <param name="image">图像</param>
-        /// <param name="parameter">参数</param>
-        /// <returns></returns>
-        [Obsolete("请用PaddleOCREngine引擎进行文字识别,该方法将在下一版本移除", false)]
-        public static OCRResult DetectText(Image image, OCRModelConfig modelConfig, OCRParameter parameter = null)
-        {
-            using (PaddleOCREngine engine = new PaddleOCREngine(modelConfig, parameter))
-            {
-                return engine.DetectText(image);
-            }
-        }
-        /// <summary>
-        ///文本识别
-        /// </summary>
-        /// <param name="imagebyte">图像内存流</param>
-        /// <param name="parameter">参数</param>
-        /// <returns></returns>
-        [Obsolete("请用PaddleOCREngine引擎进行文字识别,该方法将在下一版本移除", false)]
-        public static OCRResult DetectText(byte[] imagebyte, OCRModelConfig modelConfig, OCRParameter parameter = null)
-        {
-            using (PaddleOCREngine engine = new PaddleOCREngine(modelConfig, parameter))
-            {
-                return engine.DetectText(imagebyte);
-            }
-        }
-        /// <summary>
-        ///结构化文本识别(临时解决方案，需要的请研究官方的结构化识别)
-        /// </summary>
-        /// <param name="image">图像</param>
-        /// <param name="parameter">参数</param>
-        /// <returns></returns>
-        [Obsolete("请用PaddleOCREngine引擎进行文字识别,该方法将在下一版本移除", false)]
-        public static OCRStructureResult DetectStructure(Image image, OCRModelConfig modelConfig, OCRParameter parameter = null)
-        {
-            using (PaddleOCREngine engine = new PaddleOCREngine(modelConfig, parameter))
-            {
-                return engine.DetectStructure(image);
-            }
-        }
-  
     }
 }

@@ -16,6 +16,12 @@
 #pragma pack(push,1)
 #include <vector>
 using namespace std;
+
+
+#pragma pack(push,1)
+/// <summary>
+/// OCR识别参数
+/// </summary>
 struct OCRParameter
 {
 	//通用参数
@@ -24,7 +30,7 @@ struct OCRParameter
 	int gpu_mem;
 	int numThread;
 	bool enable_mkldnn;
-	
+
 	//检测模型相关
 	int    Padding;
 	int    MaxSideLen;
@@ -35,7 +41,7 @@ struct OCRParameter
 	bool visualize;
 	bool    DoAngle;
 	bool   MostAngle;
-	
+
 	//方向分类器相关
 	bool use_angle_cls;
 	float   cls_thresh;
@@ -47,8 +53,7 @@ struct OCRParameter
 		gpu_id = 0;
 		gpu_mem = 4000;
 		numThread = 2;
-		enable_mkldnn = true;
-		
+		enable_mkldnn = false;
 		//检测模型相关
 		Padding = 50;
 		MaxSideLen = 2048;
@@ -67,19 +72,24 @@ struct OCRParameter
 	}
 };
 
+/// <summary>
+/// 文本区域
+/// </summary>
 struct Textblock {
-	
+
 	std::wstring textblock;
 	std::vector<std::vector<int>> box;
 	float score;
-	Textblock(wstring textblock, std::vector<std::vector<int>> box,float score) {
+	Textblock(wstring textblock, std::vector<std::vector<int>> box, float score) {
 		this->textblock = textblock;
 		this->box = box;
 		this->score = score;
 	}
 };
 
-//textblock文本四个角的点
+/// <summary>
+/// OCR文本区域四周的点
+/// </summary>
 struct _OCRTextPoint {
 	int x;
 	int y;
@@ -87,6 +97,9 @@ struct _OCRTextPoint {
 	}
 };
 
+/// <summary>
+/// OCR文本
+/// </summary>
 struct _OCRText {
 	//textblock文本
 	int textLen;
@@ -101,10 +114,14 @@ struct _OCRText {
 		score = 0.0f;
 	}
 };
-
+/// <summary>
+/// OCR识别结果
+/// </summary>
 typedef struct _OCRResult {
 	//textblock文本个数
 	int textCount;
 	_OCRText* pOCRText;
 }OCRResult, * LpOCRResult;
+
+#pragma pack(pop) 
 #pragma pack(pop) 

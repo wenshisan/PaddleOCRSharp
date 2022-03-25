@@ -21,3 +21,16 @@
 /PaddleOCRSharp/bin/x64/Debug
 /PaddleOCRCppDemo/x64/Debug
 /x64/Debug
+/PaddleOCRDemo/PaddleOCRCppDemo/Release
+/PaddleOCRDemo/PaddleOCRCppDemo/x64/Release
+/PaddleOCRDemo/PaddleOCRSharpDemo/bin/x64
+/PaddleOCRDemo/PaddleOCRSharpDemo/obj
+/PaddleOCRDemo/WebAPIDemo/bin
+/PaddleOCRDemo/WebAPIDemo/obj
+/PaddleOCRDemo/WebAPIDemo/WebAPIDemo.csproj.user
+/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.vcxproj.user
+/PaddleOCRDemo/PaddleOCRCppDemo/*.log
+/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.Build.CppClean.log
+/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.obj
+/PaddleOCRSharp/PaddleOCRSharp.csproj.user
+/PaddleOCRDemo/WebAPIDemo/Properties/PublishProfiles/*.user

@@ -1,7 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net35;net40;net461;net48;netstandard2.0;netcoreapp3.1;net5.0;net6.0;</TargetFrameworks>
+    <TargetFrameworks>
+		net35;
+		net40;
+		net45;
+		net451;
+		net452;
+		net46;
+		net461;
+		net462;
+		net47;
+		net471;
+		net472;
+		net48;
+		netstandard2.0;netcoreapp3.1;
+		net5.0;net6.0;
+	</TargetFrameworks>
 	   <PackageTags>Paddle;OCR;AI;CV;PaddleOCR;character recognition;NET;Csharp</PackageTags>
 	  <IsPublishable>False</IsPublishable>
 	  <Authors>raoyutian</Authors>
@@ -9,9 +24,9 @@
 	  <Description>This project is based on paddleocr package Net OCR class library. Including character recognition, text detection and table OCR recognition based on statistical analysis of text detection results. It can be used without network and has high recognition accuracy.</Description>
 	  <PackageProjectUrl>https://github.com/raoyutian/PaddleOCRSharp</PackageProjectUrl>
 	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>1.2.2</AssemblyVersion>
-	  <FileVersion>1.2.2</FileVersion>
-	  <Version>1.2.2</Version>
+	  <AssemblyVersion>1.3.0</AssemblyVersion>
+	  <FileVersion>1.3.0</FileVersion>
+	  <Version>1.3.0</Version>
 	  <Platforms>x64</Platforms>
 	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	  <RepositoryUrl>https://github.com/raoyutian/PaddleOCRSharp</RepositoryUrl>
@@ -38,7 +53,6 @@
 	   <PackagePath>contentFiles\any\any\</PackagePath>
     </None>
   </ItemGroup>
-	 
 	 <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="XCopy /E /Y &quot;$(SolutionDir)PaddleOCRLib\**&quot; &quot;$(TargetDir)&quot;" />
   </Target>

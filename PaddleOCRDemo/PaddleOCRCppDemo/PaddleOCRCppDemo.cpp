@@ -2,11 +2,14 @@
 #include <Windows.h>
 #include <tchar.h>
 #include "string"
-#include <include/Parameter.h>
 #include <string.h>
+#include <include/Parameter.h>
+#include <io.h> 
 using namespace std;
+
 #pragma comment (lib,"PaddleOCR.lib")
 extern "C" {
+
 	/// <summary>
 	/// PaddleOCREngine引擎初始化
 	/// </summary>
@@ -17,24 +20,56 @@ extern "C" {
 	/// <param name="parameter"></param>
 	/// <returns></returns>
 	__declspec(dllimport) int* Initialize(char* det_infer, char* cls_infer, char* rec_infer, char* keys, OCRParameter  parameter);
+	
 	/// <summary>
-	/// 文本检测
+	/// 文本检测识别-图片路径
 	/// </summary>
-	/// <param name="engine"></param>
-	/// <param name="imagefile"></param>
+	/// <param name="engine">由Initialize返回的引擎</param>
+	/// <param name="imagefile">图片路径</param>
 	/// <param name="pOCRResult">返回结果</param>
 	/// <returns></returns>
 	__declspec(dllimport) int  Detect(int* engine, char* imagefile, LpOCRResult* pOCRResult);
+	
+	/// <summary>
+	///  文本检测识别-cv Mat
+	/// </summary>
+	/// <param name="engine">由Initialize返回的引擎</param>
+	/// <param name="cvmat">opencv Mat</param>
+	/// <param name="pOCRResult">返回结果</param>
+	/// <returns></returns>
+	// __declspec(dllimport) int  DetectMat(int* engine, cv::Mat& cvmat, LpOCRResult* pOCRResult);
+
+	/// <summary>
+	/// 文本检测识别-图像字节流
+	/// </summary>
+	/// <param name="engine">由Initialize返回的引擎</param>
+	/// <param name="imagebytedata">图像字节流</param>
+	/// <param name="size">图像字节流长度</param>
+	/// <param name="OCRResult">返回结果</param>
+	/// <returns></returns>
+	__declspec(dllimport) int DetectByte(int* engine, char* imagebytedata, size_t* size, LpOCRResult* OCRResult);
+
+	/// <summary>
+	/// 文本检测识别-图像base64
+	/// </summary>
+	/// <param name="engine">由Initialize返回的引擎</param>
+	/// <param name="imagebase64">图像base64</param>
+	/// <param name="OCRResult">返回结果</param>
+	/// <returns></returns>
+	__declspec(dllimport) int DetectBase64(int* engine, char* imagebase64, LpOCRResult* OCRResult);
+
 	/// <summary>
 	/// 释放引擎对象
 	/// </summary>
 	/// <param name="engine"></param>
 	__declspec(dllimport) void FreeEngine(int* engine);
+	
 	/// <summary>
 	/// 释放文本识别结果对象
 	/// </summary>
 	/// <param name="pOCRResult"></param>
 	__declspec(dllimport) void FreeDetectResult(LpOCRResult pOCRResult);
+	
 	/// <summary>
 	/// PaddleOCR检测
 	/// </summary>
@@ -46,27 +81,43 @@ extern "C" {
 
 };
 
-std::wstring string2wstring(const std::string& s)
+void getFiles(string path, vector<string>& files)
 {
-	int len;
-	int slength = (int)s.length() + 1;
-	len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
-	wchar_t* buf = new wchar_t[len];
-	MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
-	std::wstring r(buf);
-	delete[] buf;
-	return r;
+	intptr_t   hFile = 0;//文件句柄，过会儿用来查找
+	struct _finddata_t fileinfo;//文件信息
+	string p;
+	if ((hFile = _findfirst(p.assign(path).append("\\*").c_str(), &fileinfo)) != -1)
+		//如果查找到第一个文件
+	{
+		do
+		{
+			if ((fileinfo.attrib & _A_SUBDIR))//如果是文件夹
+			{
+				if (strcmp(fileinfo.name, ".") != 0 && strcmp(fileinfo.name, "..") != 0)
+					getFiles(p.assign(path).append("\\").append(fileinfo.name), files);
+			}
+			else//如果是文件
+			{
+				files.push_back(p.assign(path).append("\\").append(fileinfo.name));
+			}
+		} while (_findnext(hFile, &fileinfo) == 0);	//能寻找到其他文件
+
+		_findclose(hFile);	//结束查找，关闭句柄
+	}
 }
 
 int main()
 {
 	LpOCRResult lpocrreult;
 	OCRParameter parameter;
-	/*parameter.enable_mkldnn = false;*/
+	parameter.enable_mkldnn = true;
+	parameter.numThread = 4;
+	parameter.BoxScoreThresh = 0.5f;
 	char path[MAX_PATH];
 	 
 	GetCurrentDirectoryA(MAX_PATH, path);
  
+
 	string cls_infer(path);
 	cls_infer += "\\inference\\ch_ppocr_mobile_v2.0_cls_infer";
 	string rec_infer(path);
@@ -75,24 +126,49 @@ int main()
 	det_infer += "\\inference\\ch_PP-OCRv2_det_infer";
 	string ocrkeys(path);
 	ocrkeys += "\\inference\\ppocr_keys.txt";
-	string imagefile(path);
-	imagefile += "\\test.jpg";
 	
+	string imagepath(path);
+	imagepath += "\\image"; 
+	vector<string> images;
+	getFiles(imagepath, images);
+
 	int*  pEngine = Initialize(const_cast<char*>(det_infer.c_str()),
 							 const_cast<char*>(cls_infer.c_str()), 
 						     const_cast<char*>(rec_infer.c_str()),
 							 const_cast<char*>(ocrkeys.c_str()),
 		                     parameter);
 	
-	int  cout = Detect(pEngine, const_cast<char*>(imagefile.c_str()), &lpocrreult);
 	std::wcout.imbue(std::locale("chs"));
-	for (size_t i = 0; i < cout; i++)
+	if (images.size() > 0)
 	{
-		wstring ss = (WCHAR*)(lpocrreult->pOCRText[i].ptext);
-		std::wcout << ss; 
+		
+	 
+		for (size_t i = 0; i < images.size(); i++)
+		{ 
+			std::wcout << "----------------------------------------------------------------- "<< endl;
+			int  cout = Detect(pEngine, const_cast<char*>(images[i].c_str()), &lpocrreult);
+			if (cout > 0)
+			{
+				for (int j = cout-1; j >=0; j--)
+				{
+					wstring ss = (WCHAR*)(lpocrreult->pOCRText[j].ptext);
+					std::wcout << ss << endl;
+
+				}
+				
+			}
+			FreeDetectResult(lpocrreult);
+		}
 	}
-	FreeDetectResult(lpocrreult);
-	FreeEngine(pEngine);
+	try
+	{
+		FreeEngine(pEngine);
+	}
+	catch (const std::exception& e)
+	{
+		std::wcout << e.what();
+	}
+	
 	std::cin.get();
 }
 

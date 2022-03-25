@@ -18,7 +18,10 @@
 using namespace std;
 using namespace PaddleOCR;
 #pragma pack(push,1)
-  struct  OCREngine
+/// <summary>
+/// OCRÒýÇæ
+/// </summary>
+struct  OCREngine
 {
 public:
 	OCREngine() {};
@@ -26,10 +29,8 @@ public:
 	char* cls_infer;
 	char* rec_infer;
 	char* keys;
-	DBDetector *det;
-	CRNNRecognizer*rec;
+	DBDetector* det;
+	CRNNRecognizer* rec;
+	Classifier* cls;
 };
-
-
-
 #pragma pack(pop) 
