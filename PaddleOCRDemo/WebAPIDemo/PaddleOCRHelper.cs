@@ -21,7 +21,7 @@ namespace WebAPIDemo
                         {
                             //OCR参数
                             OCRParameter oCRParameter = new OCRParameter();
-                            oCRParameter.numThread = 1;
+                            oCRParameter.numThread = 2;
                             oCRParameter.Enable_mkldnn = 0;
                             oCRParameter.use_angle_cls = 1;
                             oCRParameter.use_polygon_score = 1;

@@ -53,7 +53,7 @@ public:
 class CrnnResizeImg {
 public:
   virtual void Run(const cv::Mat &img, cv::Mat &resize_img, float wh_ratio,
-                   bool use_tensorrt = false,
+                   bool use_tensorrt = false, bool use_custom_model= false,
                    const std::vector<int> &rec_image_shape = {3, 32, 320});
 };
 

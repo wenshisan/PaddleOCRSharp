@@ -1,0 +1,163 @@
+##  English |  [简体中文](https://github.com/raoyutian/PaddleOCRSharp/blob/main/README.md)|[Version update record](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update_en.md)
+
+## 1、Introduce
+
+
+This project is a C + + code modification and encapsulation based on Baidu paddleocr Net tool class library. It includes the table recognition function of text recognition, text detection and statistical analysis based on text detection results. At the same time, it is optimized to improve the recognition accuracy in the case of inaccurate small image recognition. It contains ultra lightweight Chinese OCR with a total model of only 8.6M size. The single model supports Chinese and English digit combination recognition, vertical text recognition and long text recognition. Support multiple text detection at the same time.
+
+The project encapsulation is extremely simplified, and the actual call is only a few lines of code, which greatly facilitates the use of middle and downstream developers and reduces the entry level of paddleocr. At the same time, different functions are provided Net framework to facilitate application development and deployment in various industries. Nuget package is a high-precision Chinese and English OCR that can be installed and used immediately, can be deployed offline, and can be recognized without network. 
+
+Paddleocr DLL file is a C + + dynamic library modified from the C + + code of the open source project paddleocr and compiled based on x64 of OpenCV.
+
+This project can only be compiled and used on x64 CPU, so 32-bit is not supported.
+
+Linux platform is not supported for the time being. If there are cross platform requirements, please refer to systen Drawing. dll、Systen. Drawing. Common. DLL reference is deleted and recompiled.
+
+The project currently supports the following net frameworks:
+
+```
+net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;
+netstandard2.0;netcoreapp3.1;
+net5.0;net6.0;
+
+```
+
+[PaddleOCR official project address (Gitee)](https://gitee.com/paddlepaddle/PaddleOCR)
+
+[PaddleOCR official project address（GitHub）](https://github.com/paddlepaddle/PaddleOCR)
+
+OCR recognition model library supports both official models and self-trained models. Bridge completely according to the  OCR interface.
+
+The project deploys its own lightweight version of 8.6m model library and server version model library (more accurate and need to be downloaded). The model library can be changed to meet the actual needs.
+
+[PaddleOCR models download address](https://gitee.com/paddlepaddle/PaddleOCR/blob/dygraph/doc/doc_ch/models_list.md)
+
+If it needs to be modified into a server version model library, the reference code is as follows: (assuming that the server version model library is under the folder inforenceserver of the running directory)
+
+```
+OpenFileDialog ofd = new OpenFileDialog();
+ofd.Filter = "*.*|*.bmp;*.jpg;*.jpeg;*.tiff;*.tiff;*.png";
+if (ofd.ShowDialog() != DialogResult.OK) return;
+var imagebyte = File.ReadAllBytes(ofd.FileName);
+ Bitmap bitmap = new Bitmap(new MemoryStream(imagebyte));
+
+ //With lightweight Chinese and English model
+ // OCRModelConfig config = null;
+ //Server Chinese and English model
+ //OCRModelConfig config = new OCRModelConfig();
+ //string root = Environment.CurrentDirectory;
+ //string modelPathroot = root + @"\inferenceserver";
+ //config.det_infer = modelPathroot + @"\ch_ppocr_server_v2.0_det_infer";
+ //config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
+ //config.rec_infer = modelPathroot + @"\ch_ppocr_server_v2.0_rec_infer";
+ //config.keys = modelPathroot + @"\ppocr_keys.txt";
+
+ //English and digital models
+ OCRModelConfig config = new OCRModelConfig();
+ string root = Environment.CurrentDirectory;
+ string modelPathroot = root + @"\en";
+ config.det_infer = modelPathroot + @"\ch_PP-OCRv2_det_infer";
+ config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
+ config.rec_infer = modelPathroot + @"\en_number_mobile_v2.0_rec_infer";
+ config.keys = modelPathroot + @"\en_dict.txt";
+
+
+ OCRParameter oCRParameter = new  OCRParameter ();
+ OCRResult ocrResult = new OCRResult();
+
+//It is suggested that the program can be initialized once globally. It is not necessary to initialize every time of identification, which is easy to report errors.  
+ PaddleOCREngine engine = new PaddleOCREngine(config, oCRParameter);
+  {
+    ocrResult = engine.DetectText(bitmap );
+  }
+ if (ocrResult != null)
+ {
+    MessageBox.Show(ocrResult.Text,"Recognition results");
+ }
+
+//When OCR is no longer used, please release paddlecrengine
+
+```
+
+ [windows下C++Download address of prediction Library](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
+
+
+
+[All  parameters](https://github.com/raoyutian/PaddleOCRSharp/blob/main/PaddleOCRSharp/OCRParameter.cs)
+
+[PaddleOCR official  parameters]](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
+
+
+## 2、Folder structure
+
+```
+PaddleOCR                    //PaddleOCR.dll文件的源代码文件夹
+|--cpp                       //PaddleOCR.dll的Cpp文件
+|--include                   //PaddleOCR.dll的.h文件
+
+PaddleOCRLib                 //OCR运行需要的文件
+|--inference                 //OCR的轻量中文简体模型库
+|--libiomp5md.dll            //第三方引用库
+|--mkldnn.dll                //第三方引用库
+|--mklml.dll                 //第三方引用库
+|--opencv_world411.dll       //第三方引用库
+|--paddle_inference.dll      //飞桨库
+|--PaddleOCR.dll             //基于开源项目PaddleOCR修改的C++动态库，源码见根目录下的PaddleOCR文件夹 
+PaddleOCRSharp               //.NET封装库项目
+PaddleOCRDemo                //Demo文件夹
+|--Cpp                       //C++项目需要引用的PaddleOCR.dll的头文件和库文件
+|--PaddleOCRCppDemo          //C++调用示例项目
+|--PaddleOCRSharpDemo        //.NET调用示例项目
+|--WebAPIDemo                //.NET的WebAPI示例项目
+
+```
+
+## 3、Source code compilation
+
+ **As for the source code compilation, it is recommended to use vs2022 version. If you cannot compile, please switch to release and then switch back to debug。** 
+
+If you cannot compile due to the problem of framework compilation, please modify paddleocrsharp \ paddleocrsharp Csproj file, delete the frame not available on the current computer,
+See Microsoft documentation for specific framework description[Target framework in SDK style project](https://docs.microsoft.com/zh-cn/dotnet/standard/frameworks)
+```
+ <TargetFrameworks>
+net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;
+netstandard2.0;netcoreapp3.1;
+net5.0;net6.0;
+</TargetFrameworks>
+```
+
+## 4、.NET example
+
+```
+  OpenFileDialog ofd = new OpenFileDialog();
+  ofd.Filter = "*.*|*.bmp;*.jpg;*.jpeg;*.tiff;*.tiff;*.png";
+  if (ofd.ShowDialog() != DialogResult.OK) return;
+  var imagebyte = File.ReadAllBytes(ofd.FileName);
+  Bitmap bitmap = new Bitmap(new MemoryStream(imagebyte));
+  OCRModelConfig config = null;
+  OCRParameter oCRParameter = new  OCRParameter ();
+
+  OCRResult ocrResult = new OCRResult();
+
+  //It is suggested that the program can be initialized once globally. It is not necessary to initialize every time of identification, which is easy to report errors。     
+  PaddleOCREngine engine = new PaddleOCREngine(config, oCRParameter);
+   {
+    ocrResult = engine.DetectText(bitmap );
+   }
+ if (ocrResult != null)
+ {
+    MessageBox.Show(ocrResult.Text,"results");
+ }
+
+ 
+
+```
+
+[C++example code](https://github.com/raoyutian/PaddleOCRSharp/blob/main/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
+
+
+## 5、[Common problems and Solutions](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_question_en.md)
+---------------------------------------------------------------------------------------------------------------------
+### if you like it,starred it.
+
+### QQ group：318860399    

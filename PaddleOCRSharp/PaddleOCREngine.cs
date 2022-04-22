@@ -18,6 +18,8 @@ using System;
 using System.Linq;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection;
+
 namespace PaddleOCRSharp
 {
     /// <summary>
@@ -354,11 +356,15 @@ namespace PaddleOCRSharp
         /// </summary>
         private void CheckLibFiles()
         {
-            //string[] checkfiles = new string[] { "libiomp5md.dll", "mkldnn.dll", "mklml.dll", "paddle_inference.dll", "PaddleOCR.dll" };
-            //foreach (var file in checkfiles)
-            //{
-            //    if (!File.Exists(file)) throw new FileNotFoundException(file);
-            //}
+            string rootpath = typeof(PaddleOCREngine).Assembly.Location;
+           
+            rootpath = Path.GetDirectoryName(rootpath);
+            rootpath= rootpath.TrimEnd('\\')+'\\';
+            string[] checkfiles = new string[] { "libiomp5md.dll", "mkldnn.dll", "mklml.dll", "paddle_inference.dll", "PaddleOCR.dll" };
+            foreach (var file in checkfiles)
+            {
+                if (!File.Exists(rootpath+file)) throw new FileNotFoundException(file);
+            }
         }
        
         /// <summary>

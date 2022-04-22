@@ -33,9 +33,9 @@ extern "C" {
 
 	__declspec(dllexport) OCREngine* Initialize(char* det_infer, char* cls_infer, char* rec_infer, char* keys, OCRParameter  parameter);
 	__declspec(dllexport) int  Detect(OCREngine* engine, char* imagefile, LpOCRResult* pOCRResult);
-	__declspec(dllexport) int  DetectMat(OCREngine* engine, cv::Mat& img, LpOCRResult* pOCRResult);
-	__declspec(dllexport) int DetectByte(OCREngine* engine, char* imagedata, size_t* size, LpOCRResult* OCRResult);
-	__declspec(dllexport) int DetectBase64(OCREngine* engine, char* base64, LpOCRResult* OCRResult);
+	__declspec(dllexport) int  DetectMat(OCREngine* engine, cv::Mat& cvmat, LpOCRResult* pOCRResult);
+	__declspec(dllexport) int DetectByte(OCREngine* engine, char* imagebytedata, size_t* size, LpOCRResult* OCRResult);
+	__declspec(dllexport) int DetectBase64(OCREngine* engine, char* imagebase64, LpOCRResult* OCRResult);
 	__declspec(dllexport) void FreeEngine(OCREngine* engine);
 	__declspec(dllexport) void FreeDetectResult(LpOCRResult pOCRResult);
 	__declspec(dllexport) void DetectImage(char* modelPath_det_infer, char* imagefile, OCRParameter parameter);

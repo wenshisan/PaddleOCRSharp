@@ -66,6 +66,7 @@ cv::Mat Classifier::Run(cv::Mat &img) {
   if (label % 2 == 1 && score > this->cls_thresh) {
     cv::rotate(src_img, src_img, 1);
   }
+  resize_img.release();
   return src_img;
 }
 

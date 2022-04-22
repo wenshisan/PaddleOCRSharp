@@ -84,14 +84,16 @@ void ResizeImgType0::Run(const cv::Mat &img, cv::Mat &resize_img,
 }
 
 void CrnnResizeImg::Run(const cv::Mat &img, cv::Mat &resize_img, float wh_ratio,
-                        bool use_tensorrt,
+                        bool use_tensorrt,  bool use_custom_model,
                         const std::vector<int> &rec_image_shape) {
   int imgC, imgH, imgW;
   imgC = rec_image_shape[0];
   imgH = rec_image_shape[1];
   imgW = rec_image_shape[2];
-
-  imgW = int(32 * wh_ratio);
+ if(!use_custom_model)
+ {
+     imgW = int(32 * wh_ratio);
+ }
 
   float ratio = float(img.cols) / float(img.rows);
   int resize_w, resize_h;

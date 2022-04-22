@@ -30,7 +30,7 @@ struct OCRParameter
 	int gpu_mem;
 	int numThread;
 	bool enable_mkldnn;
-
+	bool use_custom_model;
 	//检测模型相关
 	int    Padding;
 	int    MaxSideLen;
@@ -41,7 +41,7 @@ struct OCRParameter
 	bool visualize;
 	bool    DoAngle;
 	bool   MostAngle;
-
+	
 	//方向分类器相关
 	bool use_angle_cls;
 	float   cls_thresh;
@@ -54,6 +54,7 @@ struct OCRParameter
 		gpu_mem = 4000;
 		numThread = 2;
 		enable_mkldnn = false;
+		use_custom_model = false;
 		//检测模型相关
 		Padding = 50;
 		MaxSideLen = 2048;
@@ -65,7 +66,7 @@ struct OCRParameter
 
 		DoAngle = true;
 		MostAngle = true;
-
+		
 		//方向分类器相关
 		use_angle_cls = false;
 		cls_thresh = 0.9f;

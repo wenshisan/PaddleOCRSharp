@@ -136,10 +136,14 @@ cv::Mat Utility::GetRotateCropImage(const cv::Mat &srcimage,
     cv::Mat srcCopy = cv::Mat(dst_img.rows, dst_img.cols, dst_img.depth());
     cv::transpose(dst_img, srcCopy);
     cv::flip(srcCopy, srcCopy, 0);
+    image.release();
+    img_crop.release();
+    dst_img.release();
     return srcCopy;
   } else {
+      image.release();
+      img_crop.release();
     return dst_img;
   }
 }
-
 }

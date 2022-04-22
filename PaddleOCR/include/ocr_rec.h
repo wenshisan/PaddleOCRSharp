@@ -44,7 +44,7 @@ public:
                           const int &gpu_id, const int &gpu_mem,
                           const int &cpu_math_library_num_threads,
                           const bool &use_mkldnn, const string &label_path,
-                          const bool &use_tensorrt, const std::string &precision) {
+                          const bool &use_tensorrt, const std::string &precision, const bool& use_custom_model) {
     this->use_gpu_ = use_gpu;
     this->gpu_id_ = gpu_id;
     this->gpu_mem_ = gpu_mem;
@@ -52,7 +52,7 @@ public:
     this->use_mkldnn_ = use_mkldnn;
     this->use_tensorrt_ = use_tensorrt;
     this->precision_ = precision;
-
+    this->use_custom_model = use_custom_model;
     this->label_list_ = Utility::ReadDict(label_path);
     this->label_list_.insert(this->label_list_.begin(),
                              "#"); // blank char for ctc
@@ -74,7 +74,7 @@ private:
   int gpu_mem_ = 4000;
   int cpu_math_library_num_threads_ = 4;
   bool use_mkldnn_ = false;
-
+  bool use_custom_model = false;
   std::vector<std::string> label_list_;
 
   std::vector<float> mean_ = {0.5f, 0.5f, 0.5f};
@@ -86,10 +86,9 @@ private:
   CrnnResizeImg resize_op_;
   Normalize normalize_op_;
   Permute permute_op_;
-
-  // post-process
+ 
   PostProcessor post_processor_;
 
-}; // class CrnnRecognizer
+};  
 
-} // namespace PaddleOCR
+}  

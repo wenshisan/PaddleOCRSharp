@@ -42,7 +42,12 @@ namespace PaddleOCRSharp
         /// 启用mkldnn加速，默认关闭
         /// </summary>
         public byte Enable_mkldnn { get; set; } = 0;
+        /// <summary>
+        /// 是否使用自己的训练库，默认关闭
+        /// </summary>
+        public byte use_custom_model { get; set; } = 0;
 
+        
         #endregion
 
 

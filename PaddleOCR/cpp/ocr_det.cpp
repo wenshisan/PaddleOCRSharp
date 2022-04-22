@@ -13,7 +13,6 @@
 
 #include <include/ocr_det.h>
 
-
 namespace PaddleOCR {
 
 void DBDetector::LoadModel(const std::string &model_dir) {

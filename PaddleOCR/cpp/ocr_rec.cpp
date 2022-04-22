@@ -34,8 +34,8 @@ std::wstring CRNNRecognizer::Run(cv::Mat &img, std::vector<double> *times, std::
 
   float wh_ratio = float(srcimg.cols) / float(srcimg.rows);
   auto preprocess_start = std::chrono::steady_clock::now();
-  this->resize_op_.Run(srcimg, resize_img, wh_ratio, this->use_tensorrt_);
-
+  this->resize_op_.Run(srcimg, resize_img, wh_ratio, this->use_tensorrt_, this->use_custom_model);
+  
   this->normalize_op_.Run(&resize_img, this->mean_, this->scale_,
                           this->is_scale_);
 
@@ -91,12 +91,8 @@ std::wstring CRNNRecognizer::Run(cv::Mat &img, std::vector<double> *times, std::
    /* std::cout << str_res[i];*/
   }
   scores->push_back(score);
-
-  //ÊÍ·ÅÄÚ´æ
-  img = NULL;
-  srcimg = NULL;
-  resize_img = NULL;
-
+  srcimg.release();
+  resize_img.release();
   return  textblock;
 }
 

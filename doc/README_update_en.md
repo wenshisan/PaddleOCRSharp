@@ -21,7 +21,7 @@
 1.增加net35;net48,net6框架支持
 
 2.补齐参数类OCRParameter参数（对标官方PaddleOCR参数）[官方PaddleOCR参数](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
-
+ 
 3.增加纯检测接口DetectImage
 
 4.增加检测得分结果输出
@@ -45,16 +45,4 @@
 7.默认关闭CPU加速开关，即Enable_mkldnn默认等于0.
 
 
-### v1.3.1
 
-1.修复IIS部署时依赖文件报找不到的问题。
-
-2.优化nuget包打包设置，兼容新旧版nuget设置，不用修改设置，即装即用。
-
-3.优化内存使用
-
-4.参数类OCRParameter增加参数use_custom_model（默认关闭=0），用于控制是否使用自己训练的模型
-
-5.编译生成带XML的API帮助文档
-
-6.修复识别结果分值结果返回不正确的问题
