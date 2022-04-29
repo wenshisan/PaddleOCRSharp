@@ -3,11 +3,11 @@
 ## 1、Introduce
 
 
-This project is a C + + code modification and encapsulation based on Baidu paddleocr Net tool class library. It includes the table recognition function of text recognition, text detection and statistical analysis based on text detection results. At the same time, it is optimized to improve the recognition accuracy in the case of inaccurate small image recognition. It contains ultra lightweight Chinese OCR with a total model of only 8.6M size. The single model supports Chinese and English digit combination recognition, vertical text recognition and long text recognition. Support multiple text detection at the same time.
+This project is a C + + code modification and encapsulation based on [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) Net tool class library. It includes the table recognition function of text recognition, text detection and statistical analysis based on text detection results. At the same time, it is optimized to improve the recognition accuracy in the case of inaccurate small image recognition. It contains ultra lightweight Chinese OCR with a total model of only 8.6M size. The single model supports Chinese and English digit combination recognition, vertical text recognition and long text recognition. Support multiple text detection at the same time.
 
 The project encapsulation is extremely simplified, and the actual call is only a few lines of code, which greatly facilitates the use of middle and downstream developers and reduces the entry level of paddleocr. At the same time, different functions are provided Net framework to facilitate application development and deployment in various industries. Nuget package is a high-precision Chinese and English OCR that can be installed and used immediately, can be deployed offline, and can be recognized without network. 
 
-Paddleocr DLL file is a C + + dynamic library modified from the C + + code of the open source project paddleocr and compiled based on x64 of OpenCV.
+Paddleocr DLL file is a C + + dynamic library modified from the C + + code of the open source project [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) and compiled based on x64 of OpenCV.
 
 This project can only be compiled and used on x64 CPU, so 32-bit is not supported.
 
@@ -21,10 +21,6 @@ netstandard2.0;netcoreapp3.1;
 net5.0;net6.0;
 
 ```
-
-[PaddleOCR official project address (Gitee)](https://gitee.com/paddlepaddle/PaddleOCR)
-
-[PaddleOCR official project address（GitHub）](https://github.com/paddlepaddle/PaddleOCR)
 
 OCR recognition model library supports both official models and self-trained models. Bridge completely according to the  OCR interface.
 
@@ -91,24 +87,24 @@ var imagebyte = File.ReadAllBytes(ofd.FileName);
 ## 2、Folder structure
 
 ```
-PaddleOCR                    //PaddleOCR.dll文件的源代码文件夹
-|--cpp                       //PaddleOCR.dll的Cpp文件
-|--include                   //PaddleOCR.dll的.h文件
+PaddleOCR                    //PaddleOCR.dll  source code folder
+|--cpp                       //PaddleOCR.dll  Cpp source code
+|--include                   //PaddleOCR.dll .h  source code
 
-PaddleOCRLib                 //OCR运行需要的文件
-|--inference                 //OCR的轻量中文简体模型库
-|--libiomp5md.dll            //第三方引用库
-|--mkldnn.dll                //第三方引用库
-|--mklml.dll                 //第三方引用库
-|--opencv_world411.dll       //第三方引用库
-|--paddle_inference.dll      //飞桨库
-|--PaddleOCR.dll             //基于开源项目PaddleOCR修改的C++动态库，源码见根目录下的PaddleOCR文件夹 
-PaddleOCRSharp               //.NET封装库项目
-PaddleOCRDemo                //Demo文件夹
-|--Cpp                       //C++项目需要引用的PaddleOCR.dll的头文件和库文件
-|--PaddleOCRCppDemo          //C++调用示例项目
-|--PaddleOCRSharpDemo        //.NET调用示例项目
-|--WebAPIDemo                //.NET的WebAPI示例项目
+PaddleOCRLib                 // the  files to need  on the  runtime  
+|--inference                 // lite models for the  Chinese characters
+|--libiomp5md.dll            // 
+|--mkldnn.dll                // 
+|--mklml.dll                 // 
+|--opencv_world411.dll       // 
+|--paddle_inference.dll      //
+|--PaddleOCR.dll             //
+PaddleOCRSharp               //.NET library
+PaddleOCRDemo                //Demo folder
+|--Cpp                       //Cpp folder
+|--PaddleOCRCppDemo          //C++ demo
+|--PaddleOCRSharpDemo        //.NET demo
+|--WebAPIDemo                //.NET WebAPI demo
 
 ```
 
