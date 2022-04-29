@@ -4,10 +4,10 @@
 ## 一、介绍
 
 
-本项目是一个基于PaddleOCR的C++代码修改并封装的.NET的工具类库。包含文本识别、文本检测、基于文本检测结果的统计分析的表格识别功能，同时针对小图识别不准的情况下，做了优化，提高识别准确率。包含总模型仅8.6M的超轻量级中文OCR，单模型支持中英文数字组合识别、竖排文本识别、长文本识别。同时支持多种文本检测。
+本项目是一个基于[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的C++代码修改并封装的.NET的工具类库。包含文本识别、文本检测、基于文本检测结果的统计分析的表格识别功能，同时针对小图识别不准的情况下，做了优化，提高识别准确率。包含总模型仅8.6M的超轻量级中文OCR，单模型支持中英文数字组合识别、竖排文本识别、长文本识别。同时支持多种文本检测。
 项目封装极其简化，实际调用仅几行代码，极大的方便了中下游开发者的使用和降低了PaddleOCR的使用入门级别，同时提供不同的.NET框架使用，方便各个行业应用开发与部署。Nuget包即装即用，可以离线部署，不需要网络就可以识别的高精度中英文OCR。  
 
-本项目中PaddleOCR.dll文件是基于开源项目PaddleOCR的C++代码修改而成的C++动态库，基于opencv的x64编译而成的。
+本项目中PaddleOCR.dll文件是基于开源项目[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的C++代码修改而成的C++动态库，基于opencv的x64编译而成的。
 
 本项目只能在X64的CPU上编译和使用，因此不支持32位。
 
@@ -21,10 +21,6 @@ netstandard2.0;netcoreapp3.1;
 net5.0;net6.0;
 
 ```
-
-[PaddleOCR官方项目地址（码云）](https://gitee.com/paddlepaddle/PaddleOCR)
-
-[PaddleOCR官方项目地址（GitHub）](https://github.com/paddlepaddle/PaddleOCR)
 
 OCR识别模型库支持官方所有的模型，也支持自己训练的模型。完全按照飞桨OCR接口搭桥。
 
