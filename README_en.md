@@ -75,7 +75,7 @@ var imagebyte = File.ReadAllBytes(ofd.FileName);
 
 ```
 
- [windows下C++Download address of prediction Library](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
+ [C++ Download address of prediction Library for windows ](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
 
 
 
