@@ -9,6 +9,10 @@ The project encapsulation is extremely simplified, and the actual call is only a
 
 Paddleocr DLL file is a C + + dynamic library modified from the C + + code of the open source project [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) and compiled based on x64 of OpenCV.
 
+** This project has been adapted to the latest release2.5 of PaddleOCR  and Pp-ocrv3 model is supported.**
+
+** Ultra lightweight OCR system pp-ocrv3: improve the accuracy of Chinese and English, pure English and multilingual scenes by 5% - 11%! **
+
 This project can only be compiled and used on x64 CPU, so 32-bit is not supported.
 
 Linux platform is not supported for the time being. If there are cross platform requirements, please refer to systen Drawing. dll、Systen. Drawing. Common. DLL reference is deleted and recompiled.
@@ -37,8 +41,9 @@ if (ofd.ShowDialog() != DialogResult.OK) return;
 var imagebyte = File.ReadAllBytes(ofd.FileName);
  Bitmap bitmap = new Bitmap(new MemoryStream(imagebyte));
 
- //With lightweight Chinese and English model
+ //With lightweight Chinese and English model PP-OCRV3
  // OCRModelConfig config = null;
+ 
  //Server Chinese and English model
  //OCRModelConfig config = new OCRModelConfig();
  //string root = Environment.CurrentDirectory;
@@ -156,4 +161,4 @@ net5.0;net6.0;
 ---------------------------------------------------------------------------------------------------------------------
 ### if you like it,starred it.
 
-### QQ group：318860399    
+### QQ group：318860399、818391797   
