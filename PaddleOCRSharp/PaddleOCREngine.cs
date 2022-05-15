@@ -18,8 +18,6 @@ using System;
 using System.Linq;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
-
 namespace PaddleOCRSharp
 {
     /// <summary>
@@ -74,11 +72,15 @@ namespace PaddleOCRSharp
                 string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
                 config = new OCRModelConfig();
                 string modelPathroot = root + @"\inference";
-                config.det_infer = modelPathroot + @"\ch_PP-OCRv2_det_infer";
+                config.det_infer = modelPathroot + @"\ch_PP-OCRv3_det_infer";
                 config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
-                config.rec_infer = modelPathroot + @"\ch_PP-OCRv2_rec_infer";
+                config.rec_infer = modelPathroot + @"\ch_PP-OCRv3_rec_infer";
                 config.keys = modelPathroot + @"\ppocr_keys.txt";
             }
+            if (!Directory.Exists(config.det_infer)) throw new DirectoryNotFoundException(config.det_infer);
+            if (!Directory.Exists(config.cls_infer)) throw new DirectoryNotFoundException(config.cls_infer);
+            if (!Directory.Exists(config.rec_infer)) throw new DirectoryNotFoundException(config.rec_infer);
+            if (!File.Exists(config.keys)) throw new FileNotFoundException(config.keys);
             Engine = Initialize(config.det_infer, config.cls_infer, config.rec_infer, config.keys, parameter);
         }
        
@@ -328,11 +330,13 @@ namespace PaddleOCRSharp
                 string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
                 config = new OCRModelConfig();
                 string modelPathroot = root + @"\inference";
-                config.det_infer = modelPathroot + @"\ch_PP-OCRv2_det_infer";
+                config.det_infer = modelPathroot + @"\ch_PP-OCRv3_det_infer";
                 config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
-                config.rec_infer = modelPathroot + @"\ch_PP-OCRv2_rec_infer";
+                config.rec_infer = modelPathroot + @"\ch_PP-OCRv3_rec_infer";
                 config.keys = modelPathroot + @"\ppocr_keys.txt";
             }
+            if (!Directory.Exists(config.det_infer)) throw new DirectoryNotFoundException(config.det_infer);
+            if (!File.Exists(imagefile)) throw new FileNotFoundException(imagefile);
             DetectImage(config.det_infer, imagefile, parameter);
         }
      

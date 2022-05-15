@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 namespace PaddleOCRSharp
 {
@@ -25,37 +26,32 @@ namespace PaddleOCRSharp
         /// 文本块列表
         /// </summary>
         public List<TextBlock> TextBlocks { get; set; } = new List<TextBlock>();
-
-        public string Text
-        {
-            get
-            {
-
-                string result = "";
-                foreach (var item in TextBlocks)
-                {
-                    result += item.Text;
-                }
-                return result;
-            }
-        }
-
+        /// <summary>
+        /// 识别结果文本
+        /// </summary>
+        public string Text=>this.ToString();
+        public override string ToString()=>  string.Join("", TextBlocks.Select(x => x.Text).ToArray());
+       
     }
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class OCRPoint
     {
-
+        /// <summary>
+        /// X坐标，单位像素
+        /// </summary>
         public int X;
-
+        /// <summary>
+        /// Y坐标，单位像素
+        /// </summary>
         public int Y;
         public OCRPoint()
         {
         }
-        
         public OCRPoint(int x, int y)
         {
             X = x;
             Y = y;
         }
+        public override string ToString() => $"({X},{Y})";
     }
 }

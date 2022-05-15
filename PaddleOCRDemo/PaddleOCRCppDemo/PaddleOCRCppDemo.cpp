@@ -111,22 +111,30 @@ int main()
 	LpOCRResult lpocrreult;
 	OCRParameter parameter;
 	parameter.enable_mkldnn = true;
-	parameter.numThread = 4;
-	parameter.BoxScoreThresh = 0.5f;
+	parameter.cpu_math_library_num_threads = 4;
 	char path[MAX_PATH];
 	 
 	GetCurrentDirectoryA(MAX_PATH, path);
- 
 
 	string cls_infer(path);
-	cls_infer += "\\inference\\ch_ppocr_mobile_v2.0_cls_infer";
+	/*cls_infer += "\\inference\\ch_ppocr_mobile_v2.0_cls_infer";
 	string rec_infer(path);
 	rec_infer += "\\inference\\ch_PP-OCRv2_rec_infer";
 	string det_infer(path);
 	det_infer += "\\inference\\ch_PP-OCRv2_det_infer";
 	string ocrkeys(path);
-	ocrkeys += "\\inference\\ppocr_keys.txt";
+	ocrkeys += "\\inference\\ppocr_keys.txt";*/
 	
+	//V3
+	cls_infer += "\\inference_v3\\ch_ppocr_mobile_v2.0_cls_infer";
+	string rec_infer(path);
+	rec_infer += "\\inference_v3\\ch_PP-OCRv3_rec_infer";
+	string det_infer(path);
+	det_infer += "\\inference_v3\\ch_PP-OCRv3_det_infer";
+	string ocrkeys(path);
+	ocrkeys += "\\inference_v3\\ppocr_keys.txt";
+
+
 	string imagepath(path);
 	imagepath += "\\image"; 
 	vector<string> images;

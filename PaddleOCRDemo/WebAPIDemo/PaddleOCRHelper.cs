@@ -21,10 +21,10 @@ namespace WebAPIDemo
                         {
                             //OCR参数
                             OCRParameter oCRParameter = new OCRParameter();
-                            oCRParameter.numThread = 2;
+                            oCRParameter.numThread = 6;
                             oCRParameter.Enable_mkldnn = 0;
-                            oCRParameter.use_angle_cls = 1;
-                            oCRParameter.use_polygon_score = 1;
+                            oCRParameter.use_angle_cls = 0;
+                            oCRParameter.det_db_score_mode = 1;
                             OCRModelConfig config = null;
                             _Instance = new PaddleOCREngine(config, oCRParameter);
                         }

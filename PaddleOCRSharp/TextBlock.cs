@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 using System.Collections.Generic;
+using System.Linq;
+
 namespace PaddleOCRSharp
 {
     /// <summary>
@@ -25,5 +27,10 @@ namespace PaddleOCRSharp
         /// 得分
         /// </summary>
         public float Score { get; set; }
+        public override string ToString()
+        {
+            string str = string.Join(",", BoxPoints.Select(x => x.ToString()).ToArray());
+            return $"{Text},{Score},[{str}]";
+        }
     }
 }

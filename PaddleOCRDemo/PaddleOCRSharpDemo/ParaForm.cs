@@ -4,10 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 
 using PaddleOCRSharp;
-
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.AxHost;
-
+ 
 namespace PaddleOCRSharpDemo
 {
     public partial class ParaForm : Form
@@ -37,7 +34,7 @@ namespace PaddleOCRSharpDemo
             oCRParameter.BoxScoreThresh = Convert.ToSingle(Math.Round(trackBar3.Value * 1.0 / 100, 2));
             oCRParameter.BoxThresh = Convert.ToSingle(Math.Round(trackBar4.Value * 1.0 / 100, 2));
             oCRParameter.UnClipRatio = Convert.ToSingle(Math.Round(trackBar5.Value * 1.0 / 10, 2));
-            oCRParameter.use_polygon_score = Convert.ToByte(use_polygon_score.Checked);
+            oCRParameter.det_db_score_mode = Convert.ToByte(use_polygon_score.Checked);
 
             oCRParameter.use_angle_cls = Convert.ToByte(use_angle_cls.Checked);
             oCRParameter.cls_thresh = Convert.ToSingle(Math.Round(trackBar1.Value * 1.0 / 100, 2));

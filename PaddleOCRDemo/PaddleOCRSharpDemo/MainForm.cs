@@ -19,13 +19,12 @@ namespace PaddleOCRSharpDemo
         {
             InitializeComponent();
 
-
-            //自带轻量版中英文模型
+            //自带轻量版中英文模型V3模型
             OCRModelConfig config = null;
 
-          //服务器中英文模型
+            //服务器中英文模型
             //OCRModelConfig config = new OCRModelConfig();
-            //string root = Environment.CurrentDirectory;
+            //string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
             //string modelPathroot = root + @"\inferenceserver";
             //config.det_infer = modelPathroot + @"\ch_ppocr_server_v2.0_det_infer";
             //config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
@@ -34,11 +33,20 @@ namespace PaddleOCRSharpDemo
 
             //英文和数字模型
             //OCRModelConfig config = new OCRModelConfig();
-            //string root = Environment.CurrentDirectory;
+            //string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
             //string modelPathroot = root + @"\en";
             //config.det_infer = modelPathroot + @"\ch_PP-OCRv2_det_infer";
             //config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
             //config.rec_infer = modelPathroot + @"\en_number_mobile_v2.0_rec_infer";
+            //config.keys = modelPathroot + @"\en_dict.txt";
+
+            //英文和数字模型V3
+            //OCRModelConfig config = new OCRModelConfig();
+            //string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
+            //string modelPathroot = root + @"\en_v3";
+            //config.det_infer = modelPathroot + @"\en_PP-OCRv3_det_infer";
+            //config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
+            //config.rec_infer = modelPathroot + @"\en_PP-OCRv3_rec_infer";
             //config.keys = modelPathroot + @"\en_dict.txt";
 
 
@@ -47,7 +55,7 @@ namespace PaddleOCRSharpDemo
             oCRParameter.numThread = 6;//预测并发线程数
             oCRParameter.Enable_mkldnn = 1;//web部署该值建议设置为0,否则出错，内存如果使用很大，建议该值也设置为0.
             oCRParameter.use_angle_cls =0;//是否开启方向检测，用于检测识别180旋转
-            oCRParameter.use_polygon_score = 1;//是否使用多段线，即文字区域是用多段线还是用矩形，
+            oCRParameter.det_db_score_mode = 1;//是否使用多段线，即文字区域是用多段线还是用矩形，
 
             //初始化OCR引擎
             engine = new PaddleOCREngine(config, oCRParameter);
@@ -163,17 +171,14 @@ namespace PaddleOCRSharpDemo
 
             //OCR参数
             OCRParameter oCRParameter = new OCRParameter();
-            oCRParameter.numThread = 6;
+            oCRParameter.numThread = 2;
             oCRParameter.Enable_mkldnn = 1;
-            oCRParameter.use_angle_cls = 1;
-            oCRParameter.use_polygon_score = 1;
-            oCRParameter.MaxSideLen = 2048;
-            oCRParameter.BoxScoreThresh = 0.1f;
+            oCRParameter.det_db_score_mode = 1;
+            oCRParameter.show_img_vis = 0;
            
-
             PaddleOCREngine.Detect(null, ofd.FileName,oCRParameter);
-
-            string file = Environment.CurrentDirectory + "\\ocr_vis.png";
+            string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
+            string file = root + "\\ocr_vis.png";
             var imagebyte = File.ReadAllBytes(file);
             bmp = new Bitmap(new MemoryStream(imagebyte));
             pictureBox1.BackgroundImage = bmp;
@@ -188,8 +193,7 @@ namespace PaddleOCRSharpDemo
             Bitmap bitmap = (Bitmap)this.pictureBox1.BackgroundImage;
             foreach (var item in ocrResult.TextBlocks)
             {
-                // richTextBox1.AppendText(item.Text + ";score:" + item.Score + "\n");
-                richTextBox1.AppendText(item.Text + "\n");
+               richTextBox1.AppendText(item.Text + "\n");
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     g.DrawPolygon(new Pen(Brushes.Red,2), item.BoxPoints.Select(x=>new PointF() { X=x.X,Y=x.Y}).ToArray());
