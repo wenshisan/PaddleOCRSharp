@@ -8,7 +8,8 @@
 项目封装极其简化，实际调用仅几行代码，极大的方便了中下游开发者的使用和降低了PaddleOCR的使用入门级别，同时提供不同的.NET框架使用，方便各个行业应用开发与部署。Nuget包即装即用，可以离线部署，不需要网络就可以识别的高精度中英文OCR。  
 
 本项目中PaddleOCR.dll文件是基于开源项目[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的C++代码修改而成的C++动态库，基于opencv的x64编译而成的。
-
+####  **本项目已经适配[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)最新版release2.5，并支持PP-OCRv3模型。** 
+####  **超轻量OCR系统PP-OCRv3：中英文、纯英文以及多语言场景精度再提升5% - 11%！** 
 本项目只能在X64的CPU上编译和使用，因此不支持32位。
 
 暂不支持Linux平台，如果有跨平台需求，请把本项目有关Systen.Drawing.dll、Systen.Drawing.Common.dll的引用删除，重新编译。
@@ -37,8 +38,9 @@ if (ofd.ShowDialog() != DialogResult.OK) return;
 var imagebyte = File.ReadAllBytes(ofd.FileName);
  Bitmap bitmap = new Bitmap(new MemoryStream(imagebyte));
 
- //自带轻量版中英文模型
+ //自带轻量版中英文模型PP-OCRv3
  // OCRModelConfig config = null;
+
  //服务器中英文模型
  //OCRModelConfig config = new OCRModelConfig();
  //string root = Environment.CurrentDirectory;
@@ -71,15 +73,14 @@ var imagebyte = File.ReadAllBytes(ofd.FileName);
     MessageBox.Show(ocrResult.Text,"识别结果");
  }
 
+
 //不再用OCR时，请把PaddleOCREngine释放
 
 ```
 
- [windows下C++预测库下载地址](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
+[windows下C++预测库下载地址](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
 
-
-
-[全部调用参数](https://github.com/raoyutian/PaddleOCRSharp/blob/main/PaddleOCRSharp/OCRParameter.cs)
+[调用参数说明](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/PaddleOCRSharp/OCRParameter.cs)
 
 [PaddleOCR官方参数](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
 
@@ -166,5 +167,6 @@ net5.0;net6.0;
 ---------------------------------------------------------------------------------------------------------------------
 ### 喜欢的话就给个星，如果对你有用，就点个赞。开源不容易，为了造福大众。谢谢！
 
-### QQ交流群：318860399，有问题可以加QQ群咨询。微信公众号：明月心技术学堂，可以通过微信公众号获取微信群二维码。
+#### QQ技术交流群：318860399、818391797。
+#### 微信公众号：明月心技术学堂。
 
