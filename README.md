@@ -1,4 +1,4 @@
-### 简体中文 | [English](https://github.com/raoyutian/paddleocrsharp/main/README_en.md)     |[更新记录](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update.md)
+### 简体中文 | [English](https://github.com/raoyutian/paddleocrsharp/blob/main/README_en.md)     |[更新记录](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update.md)
 
 
 ### 介绍
