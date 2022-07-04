@@ -12,11 +12,11 @@
 			<Link>inference\ch_ppocr_mobile_v2.0_cls_infer\%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\ch_PP-OCRv2_det_infer\*.*">
+		<None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\ch_PP-OCRv3_det_infer\*.*">
 			<Link>inference\ch_PP-OCRv3_det_infer\%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\ch_PP-OCRv2_rec_infer\*.*">
+		<None Include="$(MSBuildThisFileDirectory)\PaddleOCRLib\inference\ch_PP-OCRv3_rec_infer\*.*">
 			<Link>inference\ch_PP-OCRv3_rec_infer\%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

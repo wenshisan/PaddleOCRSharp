@@ -18,6 +18,8 @@ using System;
 using System.Linq;
 using System.Drawing.Imaging;
 using System.IO;
+ 
+
 namespace PaddleOCRSharp
 {
     /// <summary>
@@ -352,9 +354,34 @@ namespace PaddleOCRSharp
 #if NET35
 #else
             if (!Environment.Is64BitProcess) throw new Exception("暂不支持32位程序使用本OCR");
+
+#endif
+
+#if NET35_OR_GREATER
+            var registryKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64", false);
+            if (registryKey != null)
+            {
+                var value = registryKey.GetValue("Bld");
+                if (value != null && Convert.ToInt32(value) < 25088)
+                {
+                    throw new Exception("本系统没有安装msvc++2017版本！");
+                }
+            }
+#endif
+
+#if NET6_0_OR_GREATER
+            var registryKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64", false);
+            if (registryKey != null)
+            {
+                var value = registryKey.GetValue("Bld");
+                if (value != null && Convert.ToInt32(value) < 25088)
+                {
+                    throw new Exception("本系统没有安装msvc++2017版本！");
+                }
+            }
 #endif
         }
-      
+
         /// <summary>
         /// 依赖文件检查
         /// </summary>

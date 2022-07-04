@@ -17,16 +17,16 @@
 		netstandard2.0;netcoreapp3.1;
 		net5.0;net6.0;
 	</TargetFrameworks>
-	   <PackageTags>Paddle;OCR;AI;CV;PaddleOCR;character recognition;NET;Csharp</PackageTags>
+	   <PackageTags>OCR;Paddle;AI;CV;PaddleOCR;character recognition;NET;Csharp</PackageTags>
 	  <IsPublishable>False</IsPublishable>
 	  <Authors>raoyutian</Authors>
 	  <Company />
-	  <Description>This project is based on paddleocr package Net OCR class library. Including character recognition, text detection and table OCR recognition based on statistical analysis of text detection results. It can be used without network and has high recognition accuracy.</Description>
+	  <Description>This project is based on Baidu PaddleOCR, Including character recognition, text detection and table OCR recognition based on statistical analysis of text detection results. It can be used without network and has high recognition accuracy.</Description>
 	  <PackageProjectUrl>https://github.com/raoyutian/PaddleOCRSharp</PackageProjectUrl>
 	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>2.0.1</AssemblyVersion>
-	  <FileVersion>2.0.1</FileVersion>
-	  <Version>2.0.1</Version>
+	  <AssemblyVersion>2.0.2</AssemblyVersion>
+	  <FileVersion>2.0.2</FileVersion>
+	  <Version>2.0.2</Version>
 	  <Platforms>x64</Platforms>
 	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	  <RepositoryUrl>https://github.com/raoyutian/PaddleOCRSharp</RepositoryUrl>

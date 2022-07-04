@@ -18,18 +18,19 @@ namespace PaddleOCRSharpDemo
         public MainForm()
         {
             InitializeComponent();
+           
 
-            //自带轻量版中英文模型V3模型
-            OCRModelConfig config = null;
+             //自带轻量版中英文模型V3模型
+             // OCRModelConfig config = null;
 
-            //服务器中英文模型
-            //OCRModelConfig config = new OCRModelConfig();
-            //string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
-            //string modelPathroot = root + @"\inferenceserver";
-            //config.det_infer = modelPathroot + @"\ch_ppocr_server_v2.0_det_infer";
-            //config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
-            //config.rec_infer = modelPathroot + @"\ch_ppocr_server_v2.0_rec_infer";
-            //config.keys = modelPathroot + @"\ppocr_keys.txt";
+             //服务器中英文模型
+             OCRModelConfig config = new OCRModelConfig();
+            string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
+            string modelPathroot = root + @"\inferenceserver";
+            config.det_infer = modelPathroot + @"\ch_ppocr_server_v2.0_det_infer";
+            config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
+            config.rec_infer = modelPathroot + @"\ch_ppocr_server_v2.0_rec_infer";
+            config.keys = modelPathroot + @"\ppocr_keys.txt";
 
             //英文和数字模型
             //OCRModelConfig config = new OCRModelConfig();
@@ -54,8 +55,10 @@ namespace PaddleOCRSharpDemo
             OCRParameter oCRParameter = new OCRParameter();
             oCRParameter.numThread = 6;//预测并发线程数
             oCRParameter.Enable_mkldnn = 1;//web部署该值建议设置为0,否则出错，内存如果使用很大，建议该值也设置为0.
-            oCRParameter.use_angle_cls =0;//是否开启方向检测，用于检测识别180旋转
+            oCRParameter.use_angle_cls =1;//是否开启方向检测，用于检测识别180旋转
             oCRParameter.det_db_score_mode = 1;//是否使用多段线，即文字区域是用多段线还是用矩形，
+                                               //  oCRParameter.rec_img_h = 32;
+            oCRParameter.UnClipRatio = 1.6f;
 
             //初始化OCR引擎
             engine = new PaddleOCREngine(config, oCRParameter);
