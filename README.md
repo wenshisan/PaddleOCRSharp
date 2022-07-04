@@ -1,4 +1,4 @@
-### 简体中文 | [English](https://github.com/raoyutian/paddleocrsharp/main/README_en.md)     |[更新记录](https://github.com/raoyutian/paddleocrsharp/main/doc/README_update.md)
+### 简体中文 | [English](https://github.com/raoyutian/paddleocrsharp/main/README_en.md)     |[更新记录](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update.md)
 
 
 ### 介绍
@@ -81,7 +81,7 @@ net5.0;net6.0;
 
 ```
 
-[C++示例代码](https://github.com/raoyutian/paddleocrsharp/main/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
+[C++示例代码](https://github.com/raoyutian/paddleocrsharp/blob/main/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
 
 #### 2. 模型
 
@@ -169,7 +169,7 @@ net5.0;net6.0;
 
 ### 常见问题与解决方案
 
-[常见问题与解决方案](https://github.com/raoyutian/paddleocrsharp/main/doc/README_question.md)
+[常见问题与解决方案](https://github.com/raoyutian/paddleocrsharp/blob/main/doc/README_question.md)
 
 ### 技术交流方式
 ------
