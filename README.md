@@ -1,4 +1,4 @@
-### 简体中文 | [English](https://github.com/raoyutian/PaddleOCRSharp/blob/main/README_en.md)     |[更新记录](github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update.md)
+### 简体中文 | [English](https://github.com/raoyutian/PaddleOCRSharp/blob/main/README_en.md)     |[更新记录](/blob/main/doc/README_update.md)
 
 #### 如果对你有用或者喜欢，那就给颗星赞，点个赞。谢谢！
 
