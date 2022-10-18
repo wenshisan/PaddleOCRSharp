@@ -77,10 +77,10 @@ OCR识别模型库支持官方所有的模型，也支持自己训练的模型�
 
 |模型名称|模型大小|下载地址|备注|
 |---|---|---|---|
-|ch_PP-OCRv2  |10M  |[中英文轻量v2](https://github.com/raoyutian/PaddleOCRSharp/raw/main/models/PP-OCRv2/inference.zip)  | |
-|en_PP-OCRv2  |4M   |[英文数字v2](https://github.com/raoyutian/PaddleOCRSharp/raw/main/models/PP-OCRv2/en.zip)  |  |
-|ch_PP-OCRv3  |12M  |[中英文轻量v3](https://github.com/raoyutian/PaddleOCRSharp/raw/main/models/PP-OCRv3/inference_v3.zip)|   |
-|en_PP-OCRv3  |10M  |[英文数字v3](https://github.com/raoyutian/PaddleOCRSharp/raw/main/models/PP-OCRv3/en_v3.zip)|   |
+|ch_PP-OCRv2  |10M  |[中英文轻量v2](https://github.com/raoyutian/PaddleOCRSharp/tree/main/models/PP-OCRv2/inference.zip)  | |
+|en_PP-OCRv2  |4M   |[英文数字v2](https://github.com/raoyutian/PaddleOCRSharp/tree/main/models/PP-OCRv2/en.zip)  |  |
+|ch_PP-OCRv3  |12M  |[中英文轻量v3](https://github.com/raoyutian/PaddleOCRSharp/tree/main/models/PP-OCRv3/inference_v3.zip)|   |
+|en_PP-OCRv3  |10M  |[英文数字v3](https://github.com/raoyutian/PaddleOCRSharp/tree/main/models/PP-OCRv3/en_v3.zip)|   |
 
 [更多PaddleOCR模型下载地址](https://gitee.com/paddlepaddle/PaddleOCR/blob/dygraph/doc/doc_ch/models_list.md)
 
