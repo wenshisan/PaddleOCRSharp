@@ -132,18 +132,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PaddleOCRSharp\PaddleOCRSharp.csproj">
-      <Project>{ab10d356-2d95-4460-96ca-9a7129ad0a76}</Project>
-      <Name>PaddleOCRSharp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <PackageReference Include="PaddleOCRSharp">
+      <Version>2.0.4</Version>
+    </PackageReference>
     <PackageReference Include="ScreenCapturerSharp">
-      <Version>1.1.0</Version>
+      <Version>1.2.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCopy /E /Y "$(SolutionDir)PaddleOCRLib\**" "$(TargetDir)"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

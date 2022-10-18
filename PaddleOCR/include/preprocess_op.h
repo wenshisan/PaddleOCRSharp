@@ -44,6 +44,11 @@ public:
   virtual void Run(const cv::Mat *im, float *data);
 };
 
+class PermuteBatch {
+public:
+  virtual void Run(const std::vector<cv::Mat> imgs, float *data);
+};
+    
 class ResizeImgType0 {
 public:
   virtual void Run(const cv::Mat &img, cv::Mat &resize_img, int max_size_len,
@@ -53,7 +58,7 @@ public:
 class CrnnResizeImg {
 public:
   virtual void Run(const cv::Mat &img, cv::Mat &resize_img, float wh_ratio,
-                   bool use_tensorrt = false, bool use_custom_model= false,
+                   bool use_tensorrt = false,
                    const std::vector<int> &rec_image_shape = {3, 32, 320});
 };
 

@@ -5,8 +5,9 @@
 #include <string.h>
 #include <include/Parameter.h>
 #include <io.h> 
+#include <chrono>
 using namespace std;
-
+using namespace chrono;
 #pragma comment (lib,"PaddleOCR.lib")
 extern "C" {
 
@@ -78,6 +79,11 @@ extern "C" {
 	/// <param name="parameter"></param>
 	/// <returns></returns>
 	__declspec(dllimport) void DetectImage(char* modelPath_det_infer, char* imagefile, OCRParameter parameter);
+	/// <summary>
+	/// CPU支持检测
+	/// </summary>
+	/// <returns></returns>
+	__declspec(dllimport) int IsCPUSupport();
 
 };
 
@@ -107,23 +113,21 @@ void getFiles(string path, vector<string>& files)
 }
 
 int main()
-{
+{  
+	//0：不支持，1：AVX，2：AVX2
+	int cpus = IsCPUSupport();
+	 
 	LpOCRResult lpocrreult;
 	OCRParameter parameter;
 	parameter.enable_mkldnn = true;
-	parameter.cpu_math_library_num_threads = 4;
+	parameter.cpu_math_library_num_threads = 10;
+	parameter.max_side_len = 960;
 	char path[MAX_PATH];
 	 
 	GetCurrentDirectoryA(MAX_PATH, path);
 
 	string cls_infer(path);
-	/*cls_infer += "\\inference\\ch_ppocr_mobile_v2.0_cls_infer";
-	string rec_infer(path);
-	rec_infer += "\\inference\\ch_PP-OCRv2_rec_infer";
-	string det_infer(path);
-	det_infer += "\\inference\\ch_PP-OCRv2_det_infer";
-	string ocrkeys(path);
-	ocrkeys += "\\inference\\ppocr_keys.txt";*/
+
 	
 	//V3
 	cls_infer += "\\inference_v3\\ch_ppocr_mobile_v2.0_cls_infer";
@@ -149,23 +153,26 @@ int main()
 	std::wcout.imbue(std::locale("chs"));
 	if (images.size() > 0)
 	{
-		
-	 
 		for (size_t i = 0; i < images.size(); i++)
 		{ 
-			std::wcout << "----------------------------------------------------------------- "<< endl;
+		    auto	start = system_clock::now();
 			int  cout = Detect(pEngine, const_cast<char*>(images[i].c_str()), &lpocrreult);
 			if (cout > 0)
 			{
+				wstring result;
 				for (int j = cout-1; j >=0; j--)
 				{
-					wstring ss = (WCHAR*)(lpocrreult->pOCRText[j].ptext);
-					std::wcout << ss << endl;
-
+					wstring  text = (WCHAR*)(lpocrreult->pOCRText[j].ptext);
+					result =result+ text;
 				}
-				
+				std::wcout << result << endl;
 			}
+
 			FreeDetectResult(lpocrreult);
+			auto	end = system_clock::now();
+			auto duration=	duration_cast<milliseconds>(end - start);
+		 
+			std::cout << duration.count()*0.001 <<"s"<< endl;
 		}
 	}
 	try

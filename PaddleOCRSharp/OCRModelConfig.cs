@@ -23,11 +23,11 @@ namespace PaddleOCRSharp
         /// </summary>
         public string det_infer { get; set; }
         /// <summary>
-        /// det_infer模型路径
+        /// cls_infer模型路径
         /// </summary>
         public string cls_infer { get; set; }
         /// <summary>
-        /// det_infer模型路径
+        /// rec_infer模型路径
         /// </summary>
         public string rec_infer { get; set; }
         /// <summary>

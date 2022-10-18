@@ -30,7 +30,7 @@ using namespace std;
 
 //µ¼³öCº¯Êý
 extern "C" {
-
+#ifdef _WIN64
 	__declspec(dllexport) OCREngine* Initialize(char* det_infer, char* cls_infer, char* rec_infer, char* keys, OCRParameter  parameter);
 	__declspec(dllexport) int  Detect(OCREngine* engine, char* imagefile, LpOCRResult* pOCRResult);
 	__declspec(dllexport) int  DetectMat(OCREngine* engine, cv::Mat& cvmat, LpOCRResult* pOCRResult);
@@ -39,4 +39,18 @@ extern "C" {
 	__declspec(dllexport) void FreeEngine(OCREngine* engine);
 	__declspec(dllexport) void FreeDetectResult(LpOCRResult pOCRResult);
 	__declspec(dllexport) void DetectImage(char* modelPath_det_infer, char* imagefile, OCRParameter parameter);
+	__declspec(dllexport) int IsCPUSupport();
+#else
+	 OCREngine* Initialize(char* det_infer, char* cls_infer, char* rec_infer, char* keys, OCRParameter  parameter);
+	int  Detect(OCREngine* engine, char* imagefile, LpOCRResult* pOCRResult);
+	 int  DetectMat(OCREngine* engine, cv::Mat& cvmat, LpOCRResult* pOCRResult);
+	int DetectByte(OCREngine* engine, char* imagebytedata, size_t* size, LpOCRResult* OCRResult);
+	 int DetectBase64(OCREngine* engine, char* imagebase64, LpOCRResult* OCRResult);
+	void FreeEngine(OCREngine* engine);
+	void FreeDetectResult(LpOCRResult pOCRResult);
+	void DetectImage(char* modelPath_det_infer, char* imagefile, OCRParameter parameter);
+	 int IsCPUSupport();
+#endif 
+	
+
 };

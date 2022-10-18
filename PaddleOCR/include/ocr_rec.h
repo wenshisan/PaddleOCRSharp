@@ -30,7 +30,6 @@
 #include <numeric>
 
 #include <include/ocr_cls.h>
-#include <include/postprocess_op.h>
 #include <include/preprocess_op.h>
 #include <include/utility.h>
 
@@ -44,7 +43,10 @@ public:
                           const int &gpu_id, const int &gpu_mem,
                           const int &cpu_math_library_num_threads,
                           const bool &use_mkldnn, const string &label_path,
-                          const bool &use_tensorrt, const std::string &precision, const bool& use_custom_model) {
+                          const bool &use_tensorrt,
+                          const std::string &precision,
+                          const int &rec_batch_num, const int &rec_img_h,
+                          const int &rec_img_w) {
     this->use_gpu_ = use_gpu;
     this->gpu_id_ = gpu_id;
     this->gpu_mem_ = gpu_mem;
@@ -52,7 +54,12 @@ public:
     this->use_mkldnn_ = use_mkldnn;
     this->use_tensorrt_ = use_tensorrt;
     this->precision_ = precision;
-    this->use_custom_model = use_custom_model;
+    this->rec_batch_num_ = rec_batch_num;
+    this->rec_img_h_ = rec_img_h;
+    this->rec_img_w_ = rec_img_w;
+    std::vector<int> rec_image_shape = {3, rec_img_h, rec_img_w};
+    this->rec_image_shape_ = rec_image_shape;
+
     this->label_list_ = Utility::ReadDict(label_path);
     this->label_list_.insert(this->label_list_.begin(),
                              "#"); // blank char for ctc
@@ -64,7 +71,8 @@ public:
   // Load Paddle inference model
   void LoadModel(const std::string &model_dir);
 
-  std::wstring Run(cv::Mat &img, std::vector<double> *times, std::vector<float>* scores);
+  void Run(std::vector<cv::Mat> img_list, std::vector<std::string> &rec_texts,
+           std::vector<float> &rec_text_scores, std::vector<double> &times);
 
 private:
   std::shared_ptr<Predictor> predictor_;
@@ -74,7 +82,7 @@ private:
   int gpu_mem_ = 4000;
   int cpu_math_library_num_threads_ = 4;
   bool use_mkldnn_ = false;
-  bool use_custom_model = false;
+
   std::vector<std::string> label_list_;
 
   std::vector<float> mean_ = {0.5f, 0.5f, 0.5f};
@@ -82,13 +90,15 @@ private:
   bool is_scale_ = true;
   bool use_tensorrt_ = false;
   std::string precision_ = "fp32";
+  int rec_batch_num_ = 6;
+  int rec_img_h_ = 32;
+  int rec_img_w_ = 320;
+  std::vector<int> rec_image_shape_ = {3, rec_img_h_, rec_img_w_};
   // pre-process
   CrnnResizeImg resize_op_;
   Normalize normalize_op_;
-  Permute permute_op_;
- 
-  PostProcessor post_processor_;
+  PermuteBatch permute_op_;
 
-};  
+}; // class CrnnRecognizer
 
-}  
+} // namespace PaddleOCR

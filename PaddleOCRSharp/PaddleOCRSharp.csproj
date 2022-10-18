@@ -24,14 +24,15 @@
 	  <Description>This project is based on Baidu PaddleOCR, Including character recognition, text detection and table OCR recognition based on statistical analysis of text detection results. It can be used without network and has high recognition accuracy.</Description>
 	  <PackageProjectUrl>https://github.com/raoyutian/PaddleOCRSharp</PackageProjectUrl>
 	  <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	  <AssemblyVersion>2.0.2</AssemblyVersion>
-	  <FileVersion>2.0.2</FileVersion>
-	  <Version>2.0.2</Version>
+	  <AssemblyVersion>2.0.4</AssemblyVersion>
+	  <FileVersion>2.0.4</FileVersion>
+	  <Version>2.0.4</Version>
 	  <Platforms>x64</Platforms>
-	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <RepositoryUrl>https://github.com/raoyutian/PaddleOCRSharp</RepositoryUrl>
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <ProduceReferenceAssemblies>true</ProduceReferenceAssemblies>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|anyCPU'">
@@ -49,7 +50,7 @@
   </ItemGroup>
 	
 	<ItemGroup>
-		 <None Include="$(SolutionDir)PaddleOCRLib\**">
+		 <None Include="$(SolutionDir)PaddleOCRSharp\PaddleOCRLib\**">
 			<Pack>true</Pack>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<PackagePath>build\PaddleOCRLib</PackagePath>

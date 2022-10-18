@@ -45,8 +45,9 @@ public:
                       const double &det_db_thresh,
                       const double &det_db_box_thresh,
                       const double &det_db_unclip_ratio,
-                      const bool &use_polygon_score, const bool &visualize,
-                      const bool &use_tensorrt, const std::string &precision) {
+                      const bool &det_db_score_mode,
+                      const bool &use_dilation, const bool &use_tensorrt,
+                      const std::string &precision) {
     this->use_gpu_ = use_gpu;
     this->gpu_id_ = gpu_id;
     this->gpu_mem_ = gpu_mem;
@@ -58,21 +59,21 @@ public:
     this->det_db_thresh_ = det_db_thresh;
     this->det_db_box_thresh_ = det_db_box_thresh;
     this->det_db_unclip_ratio_ = det_db_unclip_ratio;
-    this->use_polygon_score_ = use_polygon_score;
+    this->det_db_score_mode_ = det_db_score_mode;
+    this->use_dilation_ = use_dilation;
 
-    this->visualize_ = visualize;
     this->use_tensorrt_ = use_tensorrt;
     this->precision_ = precision;
-   /* std::cout << " LoadModel start" << endl;*/
+
     LoadModel(model_dir);
-   /* std::cout << " LoadModel End" << endl;*/
   }
 
   // Load Paddle inference model
   void LoadModel(const std::string &model_dir);
 
   // Run predictor
-  void Run(cv::Mat &img, std::vector<std::vector<std::vector<int>>> &boxes, std::vector<double> *times);
+  void Run(cv::Mat &img, std::vector<std::vector<std::vector<int>>> &boxes,
+           std::vector<double> &times);
 
 private:
   std::shared_ptr<Predictor> predictor_;
@@ -88,7 +89,8 @@ private:
   double det_db_thresh_ = 0.3;
   double det_db_box_thresh_ = 0.5;
   double det_db_unclip_ratio_ = 2.0;
-  bool use_polygon_score_ = false;
+  bool det_db_score_mode_ = 1;
+  bool use_dilation_ = false;
 
   bool visualize_ = true;
   bool use_tensorrt_ = false;

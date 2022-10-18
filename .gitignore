@@ -35,3 +35,7 @@
 /PaddleOCRSharp/PaddleOCRSharp.csproj.user
 /PaddleOCRDemo/WebAPIDemo/Properties/PublishProfiles/*.user
 /PaddleOCRDemo/PaddleOCRCppDemo/x64/Debug
+/PaddleOCRDemo/PaddleOCRSharpDemo/bin/Debug
+/PaddleOCRDemo/PaddleOCRCppDemo/x64/绿色版
+/PaddleOCRDemo/PaddleOCRCppDemo/x64/绿色版.zip
+/PaddleOCR/bin

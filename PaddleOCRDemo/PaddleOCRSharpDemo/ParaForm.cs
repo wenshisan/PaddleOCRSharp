@@ -51,7 +51,7 @@ namespace PaddleOCRSharpDemo
             bitmap.Dispose();
             GC.Collect();
 
-            PaddleOCREngine.Detect(null, tempfile, oCRParameter);
+           // PaddleOCREngine.Detect(null, tempfile, oCRParameter);
             File.Delete(tempfile);
             string file = Environment.CurrentDirectory + "\\ocr_vis.png";
             var imagebyte = File.ReadAllBytes(file);

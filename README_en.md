@@ -1,17 +1,13 @@
-##  English |  [简体中文](https://github.com/raoyutian/PaddleOCRSharp/blob/main/README.md)|[Version update record](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update_en.md)
+##  English |  [简体中文](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/README.md)|[Version update record](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_update_en.md)
 
 ## 1、Introduce
 
 
-This project is a C + + code modification and encapsulation based on [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) Net tool class library. It includes the table recognition function of text recognition, text detection and statistical analysis based on text detection results. At the same time, it is optimized to improve the recognition accuracy in the case of inaccurate small image recognition. It contains ultra lightweight Chinese OCR with a total model of only 8.6M size. The single model supports Chinese and English digit combination recognition, vertical text recognition and long text recognition. Support multiple text detection at the same time.
+This project is a C + + code modification and encapsulation based on  Baidu [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) Net tool class library. It includes the table recognition function of text recognition, text detection and statistical analysis based on text detection results. At the same time, it is optimized to improve the recognition accuracy in the case of inaccurate small image recognition. It contains ultra lightweight Chinese OCR with a total model of only 8.6M size. The single model supports Chinese and English digit combination recognition, vertical text recognition and long text recognition. Support multiple text detection at the same time.
 
 The project encapsulation is extremely simplified, and the actual call is only a few lines of code, which greatly facilitates the use of middle and downstream developers and reduces the entry level of paddleocr. At the same time, different functions are provided Net framework to facilitate application development and deployment in various industries. Nuget package is a high-precision Chinese and English OCR that can be installed and used immediately, can be deployed offline, and can be recognized without network. 
 
 Paddleocr DLL file is a C + + dynamic library modified from the C + + code of the open source project [PaddleOCR](https://github.com/paddlepaddle/PaddleOCR) and compiled based on x64 of OpenCV.
-
-** This project has been adapted to the latest release2.5 of PaddleOCR  and Pp-ocrv3 model is supported.**
-
-** Ultra lightweight OCR system pp-ocrv3: improve the accuracy of Chinese and English, pure English and multilingual scenes by 5% - 11%! **
 
 This project can only be compiled and used on x64 CPU, so 32-bit is not supported.
 
@@ -41,9 +37,8 @@ if (ofd.ShowDialog() != DialogResult.OK) return;
 var imagebyte = File.ReadAllBytes(ofd.FileName);
  Bitmap bitmap = new Bitmap(new MemoryStream(imagebyte));
 
- //With lightweight Chinese and English model PP-OCRV3
+ //With lightweight Chinese and English model
  // OCRModelConfig config = null;
- 
  //Server Chinese and English model
  //OCRModelConfig config = new OCRModelConfig();
  //string root = Environment.CurrentDirectory;
@@ -80,11 +75,11 @@ var imagebyte = File.ReadAllBytes(ofd.FileName);
 
 ```
 
- [C++ Download address of prediction Library for windows ](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
+ [C++Download address of prediction Library for windows](https://paddleinference.paddlepaddle.org.cn/user_guides/download_lib.html#windows)
 
 
 
-[All  parameters](https://github.com/raoyutian/PaddleOCRSharp/blob/main/PaddleOCRSharp/OCRParameter.cs)
+[All  parameters](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/PaddleOCRSharp/OCRParameter.cs)
 
 [PaddleOCR official  parameters]](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
 
@@ -154,11 +149,11 @@ net5.0;net6.0;
 
 ```
 
-[C++example code](https://github.com/raoyutian/PaddleOCRSharp/blob/main/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
+[C++example code](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/PaddleOCRDemo/PaddleOCRCppDemo/PaddleOCRCppDemo.cpp)
 
 
-## 5、[Common problems and Solutions](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_question_en.md)
+## 5、[Common problems and Solutions](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_question_en.md)
 ---------------------------------------------------------------------------------------------------------------------
 ### if you like it,starred it.
 
-### QQ group：318860399   
+### QQ group：318860399    

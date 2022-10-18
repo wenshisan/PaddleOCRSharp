@@ -21,7 +21,7 @@
 1.增加net35;net48,net6框架支持
 
 2.补齐参数类OCRParameter参数（对标官方PaddleOCR参数）[官方PaddleOCR参数](https://gitee.com/paddlepaddle/PaddleOCR/tree/release/2.4/deploy/cpp_infer)
- 
+
 3.增加纯检测接口DetectImage
 
 4.增加检测得分结果输出
@@ -45,4 +45,34 @@
 7.默认关闭CPU加速开关，即Enable_mkldnn默认等于0.
 
 
+### v1.3.1
 
+1.修复IIS部署时依赖文件报找不到的问题。
+
+2.优化nuget包打包设置，兼容新旧版nuget设置，不用修改设置，即装即用。
+
+3.优化内存使用
+
+4.参数类OCRParameter增加参数use_custom_model（默认关闭=0），用于控制是否使用自己训练的模型
+
+5.编译生成带XML的API帮助文档
+
+6.修复识别结果分值结果返回不正确的问题
+
+### v2.0.0
+
+1.升级预测库到v2.3；
+
+2.适配百度飞桨OCR最新版PP-OCRv3，v2.5版本；
+
+### v2.0.1（2022-05-24）
+
+1.优化OCR内存使用；
+
+2.修复部分参数设置导致的错误；
+
+3.优化nuget包默认为PP-OCRv3模型
+
+### v2.0.2（2022-05-31）
+
+1.修复nuget包默认为PP-OCRv3模型没有复制到输出目录的问题

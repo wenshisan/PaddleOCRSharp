@@ -26,7 +26,7 @@ CPU加速则会遇到，目前官方bug。关闭cpu加速    oCRParameter.Enable
 |--paddle_inference.dll      //飞桨库
 |--PaddleOCR.dll  
 
-本项目依赖VC++2017X64运行库，请检查机器上是否安装VC++依赖库
+本项目依赖VC++2017X64运行库，请检查机器上是否安装VC++依赖库，2.0.4及以上版本，免安装VC++2017X64运行库
 
 ```
 

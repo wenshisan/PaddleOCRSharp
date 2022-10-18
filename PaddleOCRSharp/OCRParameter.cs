@@ -120,9 +120,9 @@ namespace PaddleOCRSharp
 		/// </summary>
 		public int rec_batch_num { get; set; } = 6;
 		/// <summary>
-		/// 识别模型输入图像高度，默认32
+		/// 识别模型输入图像高度，默认48
 		/// </summary>
-		public int rec_img_h { get; set; } = 32;
+		public int rec_img_h { get; set; } = 48;
 		/// <summary>
 		/// 识别模型输入图像宽度，默认320
 		/// </summary>

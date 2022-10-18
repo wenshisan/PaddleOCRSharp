@@ -48,6 +48,13 @@ namespace PaddleOCRSharp
 
         [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
         internal static extern void DetectImage(string det_infer, string imagefile, OCRParameter parameter);
+
+        /// <summary>
+        /// 检测当前CPU硬件是否支持OCR
+        /// </summary>
+        /// <returns> 0：不支持，1：AVX，2：AVX2</returns>
+        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
+        internal static extern int IsCPUSupport();
         #endregion
 
         #region 属性
@@ -65,9 +72,13 @@ namespace PaddleOCRSharp
         /// <param name="config">模型配置对象，如果为空则按默认值</param>
         /// <param name="parameter">识别参数，为空均按缺省值</param>
         public PaddleOCREngine(OCRModelConfig config, OCRParameter parameter = null)
-        {
-            CheckEnvironment();
+        {   
+            //0：不支持，1：AVX，2：AVX2
+            if (IsCPUSupport() <= 0) throw new NotSupportedException($"The CPU instruction set is not surpport PaddleOCR");
+            
+         
             CheckLibFiles();
+
             if (parameter == null) parameter = new OCRParameter();
             if (config == null)
             {
@@ -84,6 +95,7 @@ namespace PaddleOCRSharp
             if (!Directory.Exists(config.rec_infer)) throw new DirectoryNotFoundException(config.rec_infer);
             if (!File.Exists(config.keys)) throw new FileNotFoundException(config.keys);
             Engine = Initialize(config.det_infer, config.cls_infer, config.rec_infer, config.keys, parameter);
+
         }
        
         /// <summary>
@@ -93,7 +105,6 @@ namespace PaddleOCRSharp
         /// <returns>OCR识别结果</returns>
         public OCRResult DetectText(string imagefile)
         {
-            CheckEnvironment();
             if (!System.IO.File.Exists(imagefile)) throw new Exception($"文件{imagefile}不存在");
             var imagebyte= File.ReadAllBytes(imagefile);
             return DetectText(imagebyte);
@@ -104,9 +115,9 @@ namespace PaddleOCRSharp
         /// </summary>
         /// <param name="image">图像</param>
         /// <returns>OCR识别结果</returns>
+        [Obsolete("下一版将移除该方法,并计划放在windows扩展程序集中", false)]
         public OCRResult DetectText(Image image)
         {
-            CheckEnvironment();
             if (image == null) throw new ArgumentNullException("image");
             var imagebyte = ImageToBytes(image);
             return DetectText(imagebyte);
@@ -119,7 +130,7 @@ namespace PaddleOCRSharp
         /// <returns>OCR识别结果</returns>
         public OCRResult DetectText(byte[] imagebyte)
         {
-            CheckEnvironment();
+             
             if (imagebyte == null) throw new ArgumentNullException("imagebyte");
 
             IntPtr ptrResult;
@@ -135,7 +146,7 @@ namespace PaddleOCRSharp
         /// <returns>OCR识别结果</returns>
         public OCRResult DetectTextBase64( string imagebase64)
         {
-            CheckEnvironment();
+            
             if (imagebase64==null || imagebase64=="") throw new ArgumentNullException("imagebase64");
             IntPtr ptrResult;
             int count = DetectBase64(Engine, imagebase64, out ptrResult);
@@ -223,20 +234,21 @@ namespace PaddleOCRSharp
             oCRResult.TextBlocks.Reverse();
             return oCRResult;
         }
-      
+
         #endregion
 
         #region 表格识别
-       
+
         /// <summary>
         ///结构化文本识别
         /// </summary>
         /// <param name="image">图像</param>
         /// <param name="parameter">参数</param>
         /// <returns>表格识别结果</returns>
+        [Obsolete("下一版将移除该方法,并计划放在windows扩展程序集中", false)]
         public OCRStructureResult DetectStructure(Image image)
         {
-            CheckEnvironment();
+            
             if (image == null) throw new ArgumentNullException("image");
             var imagebyte = ImageToBytes(image);
             OCRResult result= DetectText(imagebyte);
@@ -317,13 +329,14 @@ namespace PaddleOCRSharp
         #endregion
 
         #region 预测
-       
+
         /// <summary>
         ///仅文本预测，在当前文件夹下保存文件名为ocr_vis.png的预测结果
         /// </summary>
         /// <param name="config">模型配置对象，如果为空则按默认值</param>
         /// <param name="imagefile">检测图像全路径</param>
         /// <param name="parameter">参数</param>
+        [Obsolete("下一版将移除该方法",true)]
         public static void Detect(OCRModelConfig config, string imagefile, OCRParameter parameter=null)
         {
             if (parameter == null) parameter = new OCRParameter();
@@ -341,46 +354,11 @@ namespace PaddleOCRSharp
             if (!File.Exists(imagefile)) throw new FileNotFoundException(imagefile);
             DetectImage(config.det_infer, imagefile, parameter);
         }
-     
+
         #endregion
 
         #region private
 
-        /// <summary>
-        /// 环境监测
-        /// </summary>
-        private void CheckEnvironment()
-        {
-#if NET35
-#else
-            if (!Environment.Is64BitProcess) throw new Exception("暂不支持32位程序使用本OCR");
-
-#endif
-
-#if NET35_OR_GREATER
-            var registryKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64", false);
-            if (registryKey != null)
-            {
-                var value = registryKey.GetValue("Bld");
-                if (value != null && Convert.ToInt32(value) < 25088)
-                {
-                    throw new Exception("本系统没有安装msvc++2017版本！");
-                }
-            }
-#endif
-
-#if NET6_0_OR_GREATER
-            var registryKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\x64", false);
-            if (registryKey != null)
-            {
-                var value = registryKey.GetValue("Bld");
-                if (value != null && Convert.ToInt32(value) < 25088)
-                {
-                    throw new Exception("本系统没有安装msvc++2017版本！");
-                }
-            }
-#endif
-        }
 
         /// <summary>
         /// 依赖文件检查
@@ -397,12 +375,13 @@ namespace PaddleOCRSharp
                 if (!File.Exists(rootpath+file)) throw new FileNotFoundException(file);
             }
         }
-       
+
         /// <summary>
         /// Convert Image to Byte[]
         /// </summary>
         /// <param name="image"></param>
         /// <returns></returns>
+        [Obsolete("下一版将移除该方法,并计划放在windows扩展程序集中", false)]
         private   byte[] ImageToBytes(Image image)
         {
             ImageFormat format = image.RawFormat;
