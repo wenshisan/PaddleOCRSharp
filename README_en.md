@@ -1,5 +1,7 @@
 ##  English |  [简体中文](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/README.md)|[Version update record](https://gitee.com/raoyutian/paddle-ocrsharp/blob/master/doc/README_update_en.md)
 
+### The latest code is  in https://gitee.com/raoyutian/paddle-ocrsharp
+
 ## 1、Introduce
 
 
