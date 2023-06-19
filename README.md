@@ -6,56 +6,56 @@
 
 ## 介绍
 -----
-本项目是一个基于百度飞桨[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的C++代码修改并封装的.NET的OCR工具类库。包含文本识别、文本检测、基于文本检测结果的统计分析的表格识别功能，同时针对小图识别不准的情况下，做了优化，提高识别准确率。包含总模型仅8.6M的超轻量级中文OCR，单模型支持中英文数字组合识别、竖排文本识别、长文本识别。同时支持多种文本检测。
-项目封装极其简化，实际调用仅几行代码，极大的方便了中下游开发者的使用和降低了PaddleOCR的使用入门级别，同时提供不同的.NET框架使用，方便各个行业应用开发与部署。Nuget包即装即用，可以离线部署，不需要网络就可以识别的高精度中英文OCR。  
+  **PaddleOCRSharp** 是一个基于百度飞桨[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的C++代码修改并封装的.NET的OCR工具类库。包含文本识别、文本检测、表格识别功能。本项目针对小图识别不准的情况下做了优化，比飞桨原代码识别准确率有所提高。包含总模型仅8.6M的超轻量级中文OCR，单模型支持中英文数字组合识别、竖排文本识别、长文本识别。同时支持中英文、纯英文以及多种语言文本检测识别。
 
-本项目中PaddleOCR.dll文件是基于开源项目[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的C++代码修改而成的C++动态库，基于opencv的x64编译而成的。
+**PaddleOCRSharp**封装极其简化，实际调用仅几行代码，极大的方便了中下游开发者的使用和降低了PaddleOCR的使用入门级别，同时提供不同的.NET框架使用，方便各个行业应用开发与部署。Nuget包即装即用，可以离线部署，不需要网络就可以识别的高精度中英文OCR。  
 
- **本项目已经适配[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)最新版release2.5，并支持PP-OCRv3模型。** 
- **超轻量OCR系统PP-OCRv3：中英文、纯英文以及多语言场景精度再提升5% - 11%！** 
+ 本项目核心组件PaddleOCR.dll,由C++编写，根据百度飞桨[PaddleOCR](https://github.com/paddlepaddle/PaddleOCR)的C++代码修改而成。目前已经支持C++、.NET、Python、Golang、Rust等开发语言的直接API接口调用。PaddleOCR.dll导出标准C函数接口，欢迎更多的开发者使用其他语言调用。
 
-如果使用v3模型，请设置OCR识别参数OCRParameter对象的属性rec_img_h：
+本项目支持官方所有公开的通用OCR模型，PPOCRV2,PPOCRV3。
+如果使用v2模型，请设置OCR识别参数OCRParameter对象的属性rec_img_h=32，本项目默认使用V3模型，默认rec_img_h=48：
 
-```
-rec_img_h=48
-```
-
-本项目只能在X64的CPU上编译和使用，只能在avx指令集上的CPU上使用。其中PaddleOCR已经支持Linux平台下编译和使用。
+本项目只能在X64的CPU上编译和使用，只能在avx指令集上的CPU上使用。
 
 本项目目前支持以下.NET框架：
 
 ```
-net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;
+net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net481;
 netstandard2.0;netcoreapp3.1;
-net5.0;net6.0;
+net5.0;net6.0;net7.0;
+
+```
+
+本项目提供了两个SDK，一个是C++版本，一个是.net版本，.net版本是对C++版本的二次封装，其他语言开发亦是调用C++版本。
+
+
+本项目目前支持以下.NET框架：
+
+```
+net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net481;
+netstandard2.0;netcoreapp3.1;
+net5.0;net6.0;net7.0;
 
 ```
 
 本项目提供了两个SDK，一个是C++版本，一个是.net版本，.net版本是桥接C++的封装，核心还是C++代码。
 
-##  源码编译
-------
-   
-本项目编译使用opencv4.1.1版本，如需使用其他版本，请自行更换opencv版本编译。
+ 
 
 #### 1.文件夹结构
 
 ```
-PaddleOCR                    //该文件夹包含PaddleOCR.dll文件的源代码
 PaddleOCRSharp               //该文件夹包含.NET对PaddleOCR封装类库项目
 PaddleOCRDemo                //该文件夹包含OCR示例Demo文件夹
 |--PaddleOCRCppDemo          //C++调用示例项目
 |--PaddleOCRSharpDemo        //.NET调用示例项目
+|--python                    //python调用示例项目
+|--Go                       //Golang调用示例项目
 
 ```
+ 
 
-#### 2. C++版编译
-
-
-[C++版编译](https://github.com/raoyutian/PaddleOCRSharp/blob/main/PaddleOCR/README.md) 
-
-
-#### 3. .NET版编译
+#### 2. .NET版编译
 
 [.NET版编译](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/Csharp.md) 
 
