@@ -1,6 +1,9 @@
 ### 简体中文 | [English](https://github.com/raoyutian/PaddleOCRSharp/blob/main/README_en.md)     |[更新记录](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update.md)
 
 #### 如果对你有用或者喜欢，那就给颗星赞，点个赞。谢谢！
+![赞赏码](https://github.com/raoyutian/PaddleOCRSharp/assets/72854228/edf10c27-5f5e-4ec3-a3b5-af7433137bb4)
+
+###  如果您在工作中受益于该项目，请考虑下支持我的工作。
 
 #### 最新代码在 https://gitee.com/raoyutian/paddle-ocrsharp
 
