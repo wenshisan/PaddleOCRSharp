@@ -18,51 +18,35 @@ using System;
 using System.Linq;
 using System.Drawing.Imaging;
 using System.IO;
- 
+using System.Reflection;
 
 namespace PaddleOCRSharp
 {
     /// <summary>
     /// PaddleOCR识别引擎对象
     /// </summary>
-    public class PaddleOCREngine : IDisposable
+    public class PaddleOCREngine : EngineBase
     {
         #region PaddleOCR API
-        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        internal static extern IntPtr Initialize(string det_infer, string cls_infer, string rec_infer, string keys, OCRParameter parameter);
 
-        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        internal static extern int Detect(IntPtr engine, string imagefile, out IntPtr result);
+        [DllImport(PaddleOCRdllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        internal static extern void Initialize(string det_infer, string cls_infer, string rec_infer, string keys, OCRParameter parameter);
+        [DllImport(PaddleOCRdllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        internal static extern void Initializejson(string det_infer, string cls_infer, string rec_infer, string keys, string parameterjson);
 
-        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        internal static extern int DetectByte(IntPtr engine, byte[] imagebytedata,long size, out IntPtr result);
+        [DllImport(PaddleOCRdllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        internal static extern IntPtr Detect(string imagefile);
 
-        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        internal static extern int DetectBase64(IntPtr engine, string imagebase64, out IntPtr result);
+        [DllImport(PaddleOCRdllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        internal static extern IntPtr DetectByte(byte[] imagebytedata, long size);
 
-        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        internal static extern int FreeEngine(IntPtr enginePtr);
-        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        internal static extern int FreeDetectResult(IntPtr intPtr);
+        [DllImport(PaddleOCRdllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        internal static extern IntPtr DetectBase64(string imagebase64);
 
+        [DllImport(PaddleOCRdllName, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        internal static extern int FreeEngine();
+       
 
-        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        internal static extern void DetectImage(string det_infer, string imagefile, OCRParameter parameter);
-
-        /// <summary>
-        /// 检测当前CPU硬件是否支持OCR
-        /// </summary>
-        /// <returns> 0：不支持，1：AVX，2：AVX2</returns>
-        [DllImport("PaddleOCR.dll", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        internal static extern int IsCPUSupport();
-        #endregion
-
-        #region 属性
-        /// <summary>
-        /// OCR识别引擎指针
-        /// </summary>
-        private IntPtr Engine;
-        
         #endregion
 
         #region 文本识别
@@ -71,18 +55,20 @@ namespace PaddleOCRSharp
         /// </summary>
         /// <param name="config">模型配置对象，如果为空则按默认值</param>
         /// <param name="parameter">识别参数，为空均按缺省值</param>
-        public PaddleOCREngine(OCRModelConfig config, OCRParameter parameter = null)
-        {   
-            //0：不支持，1：AVX，2：AVX2
-            if (IsCPUSupport() <= 0) throw new NotSupportedException($"The CPU instruction set is not surpport PaddleOCR");
-            
-         
-            CheckLibFiles();
+        public PaddleOCREngine(OCRModelConfig config, OCRParameter parameter = null) : base()
+        {
+#if NET35
+                 
+#else
+            if (!Environment.Is64BitProcess) throw new NotSupportedException($"PaddleOCRSharp只支持64位进程。");
+#endif
 
+            //0：不支持，1：AVX，2：AVX2
+            if (IsCPUSupport() <= 0) throw new NotSupportedException($"当前CPU指令集不支持PaddleOCR。The CPU instruction set is not surpport PaddleOCR");
             if (parameter == null) parameter = new OCRParameter();
             if (config == null)
             {
-                string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
+                string root= GetRootDirectory();
                 config = new OCRModelConfig();
                 string modelPathroot = root + @"\inference";
                 config.det_infer = modelPathroot + @"\ch_PP-OCRv3_det_infer";
@@ -94,10 +80,47 @@ namespace PaddleOCRSharp
             if (!Directory.Exists(config.cls_infer)) throw new DirectoryNotFoundException(config.cls_infer);
             if (!Directory.Exists(config.rec_infer)) throw new DirectoryNotFoundException(config.rec_infer);
             if (!File.Exists(config.keys)) throw new FileNotFoundException(config.keys);
-            Engine = Initialize(config.det_infer, config.cls_infer, config.rec_infer, config.keys, parameter);
 
+            Initialize(config.det_infer, config.cls_infer, config.rec_infer, config.keys, parameter);
         }
-       
+        /// <summary>
+        /// PaddleOCR识别引擎对象初始化
+        /// </summary>
+        /// <param name="config">模型配置对象，如果为空则按默认值</param>
+        /// <param name="parameterjson">识别参数json字符串</param>
+        public PaddleOCREngine(OCRModelConfig config, string parameterjson):base()
+        {
+#if NET35
+
+#else
+            if (!Environment.Is64BitProcess) throw new NotSupportedException($"PaddleOCRSharp只支持64位进程。");
+#endif
+            //0：不支持，1：AVX，2：AVX2
+            if (IsCPUSupport() <= 0) throw new NotSupportedException($"当前CPU指令集不支持PaddleOCR。The CPU instruction set is not surpport PaddleOCR");
+
+            if (config == null)
+            {
+                string root = GetRootDirectory();
+                config = new OCRModelConfig();
+                string modelPathroot = root + @"\inference";
+                config.det_infer = modelPathroot + @"\ch_PP-OCRv3_det_infer";
+                config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
+                config.rec_infer = modelPathroot + @"\ch_PP-OCRv3_rec_infer";
+                config.keys = modelPathroot + @"\ppocr_keys.txt"; 
+            }
+            if ( string.IsNullOrEmpty(parameterjson))
+            {
+                parameterjson = GetRootDirectory();
+                parameterjson += @"\inference\PaddleOCR.config.json";
+                if(!File.Exists(parameterjson)) throw new FileNotFoundException(parameterjson);
+                parameterjson = File.ReadAllText(parameterjson);
+            }
+            if (!Directory.Exists(config.det_infer)) throw new DirectoryNotFoundException(config.det_infer);
+            if (!Directory.Exists(config.cls_infer)) throw new DirectoryNotFoundException(config.cls_infer);
+            if (!Directory.Exists(config.rec_infer)) throw new DirectoryNotFoundException(config.rec_infer);
+            if (!File.Exists(config.keys)) throw new FileNotFoundException(config.keys);
+            Initializejson(config.det_infer, config.cls_infer, config.rec_infer, config.keys, parameterjson);
+        }
         /// <summary>
         /// 对图像文件进行文本识别
         /// </summary>
@@ -105,9 +128,11 @@ namespace PaddleOCRSharp
         /// <returns>OCR识别结果</returns>
         public OCRResult DetectText(string imagefile)
         {
-            if (!System.IO.File.Exists(imagefile)) throw new Exception($"文件{imagefile}不存在");
-            var imagebyte= File.ReadAllBytes(imagefile);
-            return DetectText(imagebyte);
+            if (!File.Exists(imagefile)) throw new Exception($"文件{imagefile}不存在");
+            var imagebyte = File.ReadAllBytes(imagefile);
+            var result= DetectText(imagebyte);
+            imagebyte = null;
+            return result;
         }
 
         /// <summary>
@@ -115,12 +140,14 @@ namespace PaddleOCRSharp
         /// </summary>
         /// <param name="image">图像</param>
         /// <returns>OCR识别结果</returns>
-        [Obsolete("下一版将移除该方法,并计划放在windows扩展程序集中", false)]
+       
         public OCRResult DetectText(Image image)
         {
             if (image == null) throw new ArgumentNullException("image");
             var imagebyte = ImageToBytes(image);
-            return DetectText(imagebyte);
+            var result = DetectText(imagebyte);
+            imagebyte = null;
+            return result;
         }
       
         /// <summary>
@@ -129,13 +156,9 @@ namespace PaddleOCRSharp
         /// <param name="imagebyte">图像内存流</param>
         /// <returns>OCR识别结果</returns>
         public OCRResult DetectText(byte[] imagebyte)
-        {
-             
+        { 
             if (imagebyte == null) throw new ArgumentNullException("imagebyte");
-
-            IntPtr ptrResult;
-            int count  = DetectByte(Engine, imagebyte, imagebyte.LongLength,out ptrResult);
-            if (count == 0) return new OCRResult();
+            var ptrResult = DetectByte(imagebyte, imagebyte.LongLength);
             return ConvertResult(ptrResult);
         }
 
@@ -144,98 +167,37 @@ namespace PaddleOCRSharp
         /// </summary>
         /// <param name="imagebase64">图像base64</param>
         /// <returns>OCR识别结果</returns>
-        public OCRResult DetectTextBase64( string imagebase64)
+        public OCRResult DetectTextBase64(string imagebase64)
         {
-            
-            if (imagebase64==null || imagebase64=="") throw new ArgumentNullException("imagebase64");
-            IntPtr ptrResult;
-            int count = DetectBase64(Engine, imagebase64, out ptrResult);
-            if (count == 0) return new OCRResult();
+            if (imagebase64 == null || imagebase64 == "") throw new ArgumentNullException("imagebase64");
+            IntPtr ptrResult = DetectBase64(imagebase64);
             return ConvertResult(ptrResult);
-        }
-      
-        /// <summary>
-        /// 结果解析
-        /// </summary>
-        /// <param name="ptrResult"></param>
-        /// <returns></returns>
-        private OCRResult ConvertResult(IntPtr ptrResult)
+    }
+
+    /// <summary>
+    /// 结果解析
+    /// </summary>
+    /// <param name="ptrResult"></param>
+    /// <returns></returns>
+    private OCRResult ConvertResult(IntPtr ptrResult)
         {
-            if (ptrResult == IntPtr.Zero) return new OCRResult();
-            OCRResult oCRResult = new OCRResult();
-            IntPtr ptrFree = ptrResult;
+            OCRResult result = new OCRResult();
             try
             {
-                int textBlockAmount = (int)Marshal.PtrToStructure(ptrResult, typeof(int));
-                //总textBlock个数
-
-#if NET35
-                ptrResult = (IntPtr)(ptrResult.ToInt64() + 4);
-#else
-                ptrResult = ptrResult + 4;
-#endif
-
-                IntPtr ptrtextBlock = (IntPtr)Marshal.PtrToStructure(ptrResult, typeof(IntPtr));
-                ptrResult = ptrtextBlock;
-                for (int i = 0; i < textBlockAmount; i++)
-                {
-                    //文本长度
-                    int textBlockLen = (int)Marshal.PtrToStructure(ptrResult, typeof(int));
-#if NET35
-                    ptrResult = (IntPtr)(ptrResult.ToInt64() + 4);
-#else
-                    ptrResult = ptrResult + 4;
-#endif
-
-                    //文本指针
-                    IntPtr textPointValue = (IntPtr)Marshal.PtrToStructure(ptrResult, typeof(IntPtr));
-
-                    //文本
-                    TextBlock textBlock = new TextBlock();
-                    textBlock.Text = Marshal.PtrToStringUni(textPointValue);
-
-                    //文本四个点
-#if NET35
-                    ptrResult = (IntPtr)(ptrResult.ToInt64() + 8);
-#else
-                    ptrResult = ptrResult +8;
-#endif
-                    for (int p = 0; p < 4; p++)
-                    {
-                        OCRPoint oCRPoint = (OCRPoint)Marshal.PtrToStructure(ptrResult, typeof(OCRPoint));
-                        textBlock.BoxPoints.Add(new OCRPoint(oCRPoint.X, oCRPoint.Y));
-
-#if NET35
-                        ptrResult = (IntPtr)(ptrResult.ToInt64() + Marshal.SizeOf(typeof(OCRPoint)));
-#else
-                        ptrResult = ptrResult + Marshal.SizeOf(typeof(OCRPoint));
-#endif
-                    }
-
-                    //得分
-                    float score = (float)Marshal.PtrToStructure(ptrResult, typeof(float));
-                    textBlock.Score = score;
-#if NET35
-                    ptrResult = (IntPtr)(ptrResult.ToInt64() + 4);
-#else
-                    ptrResult = ptrResult + 4;
-#endif
-
-                    oCRResult.TextBlocks.Add(textBlock);
-                }
+                string json = Marshal.PtrToStringUni(ptrResult);
+                List<TextBlock> textBlocks = JsonHelper.DeserializeObject<List<TextBlock>>(json);
+                result.JsonText = json;
+                result.TextBlocks = textBlocks;
+                Marshal.FreeHGlobal(ptrResult);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw new Exception("OCR结果Json反序列化失败。", ex);
             }
-            finally
-            {
-                FreeDetectResult(ptrFree);
-            }
-            oCRResult.TextBlocks.Reverse();
-            return oCRResult;
+            return result;
         }
 
-        #endregion
+    #endregion
 
         #region 表格识别
 
@@ -243,9 +205,7 @@ namespace PaddleOCRSharp
         ///结构化文本识别
         /// </summary>
         /// <param name="image">图像</param>
-        /// <param name="parameter">参数</param>
         /// <returns>表格识别结果</returns>
-        [Obsolete("下一版将移除该方法,并计划放在windows扩展程序集中", false)]
         public OCRStructureResult DetectStructure(Image image)
         {
             
@@ -310,7 +270,7 @@ namespace PaddleOCRSharp
         /// <param name="pixellist"></param>
         /// <param name="thresholdtozero"></param>
         /// <returns></returns>
-        private List<int> getzeroindexs(int[] pixellist, int thresholdtozero = 20)
+        private List<int> getzeroindexs(int[] pixellist, int thresholdtozero = 10)
         {
             List<int> zerolist = new List<int>();
             zerolist.Add(0);
@@ -327,103 +287,13 @@ namespace PaddleOCRSharp
         }
 
         #endregion
-
-        #region 预测
-
-        /// <summary>
-        ///仅文本预测，在当前文件夹下保存文件名为ocr_vis.png的预测结果
-        /// </summary>
-        /// <param name="config">模型配置对象，如果为空则按默认值</param>
-        /// <param name="imagefile">检测图像全路径</param>
-        /// <param name="parameter">参数</param>
-        [Obsolete("下一版将移除该方法",true)]
-        public static void Detect(OCRModelConfig config, string imagefile, OCRParameter parameter=null)
-        {
-            if (parameter == null) parameter = new OCRParameter();
-            if (config == null)
-            {
-                string root = System.IO.Path.GetDirectoryName(typeof(OCRModelConfig).Assembly.Location);
-                config = new OCRModelConfig();
-                string modelPathroot = root + @"\inference";
-                config.det_infer = modelPathroot + @"\ch_PP-OCRv3_det_infer";
-                config.cls_infer = modelPathroot + @"\ch_ppocr_mobile_v2.0_cls_infer";
-                config.rec_infer = modelPathroot + @"\ch_PP-OCRv3_rec_infer";
-                config.keys = modelPathroot + @"\ppocr_keys.txt";
-            }
-            if (!Directory.Exists(config.det_infer)) throw new DirectoryNotFoundException(config.det_infer);
-            if (!File.Exists(imagefile)) throw new FileNotFoundException(imagefile);
-            DetectImage(config.det_infer, imagefile, parameter);
-        }
-
-        #endregion
-
-        #region private
-
-
-        /// <summary>
-        /// 依赖文件检查
-        /// </summary>
-        private void CheckLibFiles()
-        {
-            string rootpath = typeof(PaddleOCREngine).Assembly.Location;
-           
-            rootpath = Path.GetDirectoryName(rootpath);
-            rootpath= rootpath.TrimEnd('\\')+'\\';
-            string[] checkfiles = new string[] { "libiomp5md.dll", "mkldnn.dll", "mklml.dll", "paddle_inference.dll", "PaddleOCR.dll" };
-            foreach (var file in checkfiles)
-            {
-                if (!File.Exists(rootpath+file)) throw new FileNotFoundException(file);
-            }
-        }
-
-        /// <summary>
-        /// Convert Image to Byte[]
-        /// </summary>
-        /// <param name="image"></param>
-        /// <returns></returns>
-        [Obsolete("下一版将移除该方法,并计划放在windows扩展程序集中", false)]
-        private   byte[] ImageToBytes(Image image)
-        {
-            ImageFormat format = image.RawFormat;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                if (format.Guid == ImageFormat.Jpeg.Guid)
-                {
-                    image.Save(ms, ImageFormat.Jpeg);
-                }
-                else if (format.Guid == ImageFormat.Png.Guid)
-                {
-                    image.Save(ms, ImageFormat.Png);
-                }
-                else if (format.Guid == ImageFormat.Bmp.Guid)
-                {
-                    image.Save(ms, ImageFormat.Bmp);
-                }
-                else if (format.Guid == ImageFormat.Gif.Guid)
-                {
-                    image.Save(ms, ImageFormat.Gif);
-                }
-                else if (format.Guid == ImageFormat.Icon.Guid)
-                {
-                    image.Save(ms, ImageFormat.Icon);
-                }
-                else
-                {
-                    image.Save(ms, ImageFormat.Png);
-                }
-                byte[] buffer = new byte[ms.Length];
-                ms.Seek(0, SeekOrigin.Begin);
-                ms.Read(buffer, 0, buffer.Length);
-                return buffer;
-            }
-        }
-        #endregion
-
         #region Dispose
-
-        public void Dispose()
+        /// <summary>
+        /// 释放对象
+        /// </summary>
+        public  override void Dispose()
         {
-            FreeEngine(Engine);
+            FreeEngine();
         }
         #endregion
     }

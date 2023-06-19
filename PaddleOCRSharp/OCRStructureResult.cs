@@ -19,6 +19,9 @@ namespace PaddleOCRSharp
     /// </summary>
     public sealed class OCRStructureResult
     {
+       /// <summary>
+       /// 表格识别结果
+       /// </summary>
         public OCRStructureResult()
         {
             Cells = new List<StructureCells>();
@@ -50,6 +53,9 @@ namespace PaddleOCRSharp
     /// </summary>
     public sealed class StructureCells
     {
+        /// <summary>
+        /// 单元格构造函数
+        /// </summary>
         public StructureCells()
         {
             TextBlocks = new List<TextBlock>();

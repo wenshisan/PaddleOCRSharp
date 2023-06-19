@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PaddleOCR.h">
+    <ClInclude Include="include\yt_PaddleOCR.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\Parameter.h">
+    <ClInclude Include="include\yt_Parameter.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -157,8 +157,8 @@
     <ClCompile Include="PaddleOCRCppDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PaddleOCR.h" />
-    <ClInclude Include="include\Parameter.h" />
+    <ClInclude Include="include\yt_PaddleOCR.h" />
+    <ClInclude Include="include\yt_Parameter.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\PaddleOCR.lib" />

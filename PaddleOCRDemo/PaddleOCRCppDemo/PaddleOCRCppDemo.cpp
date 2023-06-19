@@ -3,87 +3,144 @@
 #include <tchar.h>
 #include "string"
 #include <string.h>
-#include <include/Parameter.h>
+#include <include/yt_Parameter.h>
 #include <io.h> 
 #include <chrono>
 using namespace std;
 using namespace chrono;
 #pragma comment (lib,"PaddleOCR.lib")
 extern "C" {
-
+	
+	/// <summary>
+	/// 是否使用单字节编码（适用于go,rust）,C#,Python不用打开此开关
+	/// </summary>
+	/// <param name="useANSI"></param>
+	__declspec(dllimport) void EnableANSIResult(bool useANSI);
+	/// <summary>
+	/// 文字识别引擎初始化
+	/// </summary>
+	/// <param name="det_infer">det模型全路径</param>
+	/// <param name="cls_infer">cls模型全路径</param>
+	/// <param name="rec_infer">rec模型全路径</param>
+	/// <param name="keys">字典全路径</param>
+	/// <param name="parameter">识别参数对象</param>
+	/// <returns></returns>
+	__declspec(dllimport) void Initialize(char* det_infer, char* cls_infer, char* rec_infer, char* keys, OCRParameter parameter);
 	/// <summary>
 	/// PaddleOCREngine引擎初始化
 	/// </summary>
-	/// <param name="det_infer"></param>
-	/// <param name="cls_infer"></param>
-	/// <param name="rec_infer"></param>
-	/// <param name="keys"></param>
-	/// <param name="parameter"></param>
+	/// <param name="det_infer">det模型全路径</param>
+	/// <param name="cls_infer">cls模型全路径</param>
+	/// <param name="rec_infer">rec模型全路径</param>
+	/// <param name="keys">字典全路径</param>
+	/// <param name="parameterjson">识别参数对象json字符串</param>
 	/// <returns></returns>
-	__declspec(dllimport) int* Initialize(char* det_infer, char* cls_infer, char* rec_infer, char* keys, OCRParameter  parameter);
-	
+	__declspec(dllimport) void Initializejson(char* modelPath_det_infer, char* modelPath_cls_infer, char* modelPath_rec_infer, char* keys, char* parameterjson);
 	/// <summary>
-	/// 文本检测识别-图片路径
+	/// 文本检测识别-图像文件路径
 	/// </summary>
-	/// <param name="engine">由Initialize返回的引擎</param>
-	/// <param name="imagefile">图片路径</param>
-	/// <param name="pOCRResult">返回结果</param>
+	/// <param name="imagebytedata">图像文件路径</param>
 	/// <returns></returns>
-	__declspec(dllimport) int  Detect(int* engine, char* imagefile, LpOCRResult* pOCRResult);
-	
-	/// <summary>
-	///  文本检测识别-cv Mat
-	/// </summary>
-	/// <param name="engine">由Initialize返回的引擎</param>
-	/// <param name="cvmat">opencv Mat</param>
-	/// <param name="pOCRResult">返回结果</param>
-	/// <returns></returns>
-	// __declspec(dllimport) int  DetectMat(int* engine, cv::Mat& cvmat, LpOCRResult* pOCRResult);
+	__declspec(dllimport) char* Detect(char* imagefile);
 
+	/*/// <summary>
+	/// 文本检测识别-OpenCV Mat
+	/// </summary>
+	/// <param name="cvmat">Mat对象</param>
+	/// <returns></returns>
+	__declspec(dllimport)char* DetectMat(cv::Mat& cvmat);*/
 	/// <summary>
 	/// 文本检测识别-图像字节流
 	/// </summary>
-	/// <param name="engine">由Initialize返回的引擎</param>
 	/// <param name="imagebytedata">图像字节流</param>
 	/// <param name="size">图像字节流长度</param>
-	/// <param name="OCRResult">返回结果</param>
 	/// <returns></returns>
-	__declspec(dllimport) int DetectByte(int* engine, char* imagebytedata, size_t* size, LpOCRResult* OCRResult);
+	__declspec(dllimport) char* DetectByte( char* imagebytedata, size_t* size);
+	
+	/// <summary>
+	/// 文本检测识别-图像字节流
+	/// </summary>
+	/// <param name="img">图像地址</param>
+	/// <param name="nWidth">图像宽度</param>
+	///  <param name="nHeight">图像高度</param>
+	///  <param name="nChannel">图像通道数</param>
+	/// <returns></returns>
+	__declspec(dllimport) char* DetectByteData(const char* img, int nWidth, int nHeight, int nChannel);
 
 	/// <summary>
 	/// 文本检测识别-图像base64
 	/// </summary>
-	/// <param name="engine">由Initialize返回的引擎</param>
 	/// <param name="imagebase64">图像base64</param>
-	/// <param name="OCRResult">返回结果</param>
 	/// <returns></returns>
-	__declspec(dllimport) int DetectBase64(int* engine, char* imagebase64, LpOCRResult* OCRResult);
+	__declspec(dllimport) char* DetectBase64( char* imagebase64);
 
 	/// <summary>
 	/// 释放引擎对象
 	/// </summary>
-	/// <param name="engine"></param>
-	__declspec(dllimport) void FreeEngine(int* engine);
+	__declspec(dllimport) void FreeEngine();
 	
+
+
+
+
+
+
 	/// <summary>
-	/// 释放文本识别结果对象
+	/// 表格识别引擎初始化
 	/// </summary>
-	/// <param name="pOCRResult"></param>
-	__declspec(dllimport) void FreeDetectResult(LpOCRResult pOCRResult);
-	
-	/// <summary>
-	/// PaddleOCR检测
-	/// </summary>
-	/// <param name="det_infer"></param>
-	/// <param name="imagefile"></param>
-	/// <param name="parameter"></param>
+	/// <param name="modelPath_det_infer">det模型全路径</param>
+	/// <param name="modelPath_rec_infer">cls模型全路径</param>
+	/// <param name="keys">字典全路径</param>
+	/// <param name="table_model_dir">表格模型全路径</param>
+	/// <param name="table_char_dict_path">表格字典全路径</param>
+	/// <param name="parameter">参数对象</param>
 	/// <returns></returns>
-	__declspec(dllimport) void DetectImage(char* modelPath_det_infer, char* imagefile, OCRParameter parameter);
+	__declspec(dllimport) void StructureInitialize(char* modelPath_det_infer, char* modelPath_rec_infer, char* keys, char* table_model_dir, char* table_char_dict_path, StructureParameter parameter);
 	/// <summary>
-	/// CPU支持检测
+	/// 表格识别引擎初始化json格式
 	/// </summary>
+	/// <param name="modelPath_det_infer">det模型全路径</param>
+	/// <param name="modelPath_rec_infer">cls模型全路径</param>
+	/// <param name="keys">字典全路径</param>
+	/// <param name="table_model_dir">表格模型全路径</param>
+	/// <param name="table_char_dict_path">表格字典全路径</param>
+	/// <param name="parameterjson">参数对象json格式</param>
 	/// <returns></returns>
-	__declspec(dllimport) int IsCPUSupport();
+	__declspec(dllimport) void StructureInitializejson(char* modelPath_det_infer, char* modelPath_rec_infer, char* keys, char* table_model_dir, char* table_char_dict_path, char* parameterjson);
+	/// <summary>
+	///表格识别
+	/// </summary>
+	/// <param name="imagefile">文件路径</param>
+	/// <returns></returns>
+	__declspec(dllimport) char* GetStructureDetectFile(char* imagefile);
+	///// <summary>
+	/////表格识别
+	///// </summary>
+	///// <param name="cvmat">opencv Mat对象</param>
+	///// <returns></returns>
+	//__declspec(dllimport) char* GetStructureDetectMat(cv::Mat& cvmat);
+	/// <summary>
+	///表格识别
+	/// </summary>
+	/// <param name="imagebytedata">图像字节流</param>
+	/// <param name="size">图像字节流长度</param>
+	/// <returns></returns>
+	__declspec(dllimport) char* GetStructureDetectByte(char* imagebytedata, size_t* size);
+	/// <summary>
+	/// 表格识别
+	/// </summary>
+	/// <param name="imagebase64">图像base64</param>
+	/// <returns></returns>
+	__declspec(dllimport) char* GetStructureDetectBase64(char* imagebase64);
+	/// <summary>
+	/// 释放引擎对象
+	/// </summary>
+	__declspec(dllimport) void FreeStructureEngine();
+
+
+
+
+
 
 };
 
@@ -114,13 +171,12 @@ void getFiles(string path, vector<string>& files)
 
 int main()
 {  
-	//0：不支持，1：AVX，2：AVX2
-	int cpus = IsCPUSupport();
-	 
-	LpOCRResult lpocrreult;
+	////0：不支持，1：AVX，2：AVX2
+	/*int cpus = IsCPUSupport();*/
+	// 
 	OCRParameter parameter;
 	parameter.enable_mkldnn = true;
-	parameter.cpu_math_library_num_threads = 10;
+	parameter.cpu_math_library_num_threads = 24;
 	parameter.max_side_len = 960;
 	char path[MAX_PATH];
 	 
@@ -130,13 +186,13 @@ int main()
 
 	
 	//V3
-	cls_infer += "\\inference_v3\\ch_ppocr_mobile_v2.0_cls_infer";
+	cls_infer += "\\inference\\ch_ppocr_mobile_v2.0_cls_infer";
 	string rec_infer(path);
-	rec_infer += "\\inference_v3\\ch_PP-OCRv3_rec_infer";
+	rec_infer += "\\inference\\ch_PP-OCRv3_rec_infer";
 	string det_infer(path);
-	det_infer += "\\inference_v3\\ch_PP-OCRv3_det_infer";
+	det_infer += "\\inference\\ch_PP-OCRv3_det_infer";
 	string ocrkeys(path);
-	ocrkeys += "\\inference_v3\\ppocr_keys.txt";
+	ocrkeys += "\\inference\\ppocr_keys.txt";
 
 
 	string imagepath(path);
@@ -144,7 +200,7 @@ int main()
 	vector<string> images;
 	getFiles(imagepath, images);
 
-	int*  pEngine = Initialize(const_cast<char*>(det_infer.c_str()),
+	Initialize(const_cast<char*>(det_infer.c_str()),
 							 const_cast<char*>(cls_infer.c_str()), 
 						     const_cast<char*>(rec_infer.c_str()),
 							 const_cast<char*>(ocrkeys.c_str()),
@@ -155,29 +211,18 @@ int main()
 	{
 		for (size_t i = 0; i < images.size(); i++)
 		{ 
-		    auto	start = system_clock::now();
-			int  cout = Detect(pEngine, const_cast<char*>(images[i].c_str()), &lpocrreult);
-			if (cout > 0)
-			{
-				wstring result;
-				for (int j = cout-1; j >=0; j--)
-				{
-					wstring  text = (WCHAR*)(lpocrreult->pOCRText[j].ptext);
-					result =result+ text;
-				}
-				std::wcout << result << endl;
-			}
-
-			FreeDetectResult(lpocrreult);
-			auto	end = system_clock::now();
+		    auto	start = std::chrono::steady_clock::now();
+			  wstring  result = (WCHAR*)Detect( const_cast<char*>(images[i].c_str()));
+	      	std::wcout << result << endl;
+			auto	end = std::chrono::steady_clock::now();
 			auto duration=	duration_cast<milliseconds>(end - start);
 		 
-			std::cout << duration.count()*0.001 <<"s"<< endl;
+			std::cout << duration.count() <<"ms"<< endl;
 		}
 	}
 	try
 	{
-		FreeEngine(pEngine);
+		FreeEngine();
 	}
 	catch (const std::exception& e)
 	{

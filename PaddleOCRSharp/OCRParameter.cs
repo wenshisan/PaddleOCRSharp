@@ -13,8 +13,7 @@
 // limitations under the License.
 using System.Runtime.InteropServices;
 
-
-//说明：OCRParameter类的数字能够定义顺序不可随便更改，需要与PaddleOCR中的OCRParameter顺序一致
+//说明：OCRParameter类的属性定义顺序不可随便更改，需要与PaddleOCR中的OCRParameter顺序一致
 
 namespace PaddleOCRSharp
 {
@@ -25,11 +24,12 @@ namespace PaddleOCRSharp
 	public class OCRParameter
 	{
 
-		#region 通用参数
-		/// <summary>
-		/// 是否使用GPU；默认false
-		/// </summary>
-		public byte use_gpu { get; set; } = 0;
+        #region 通用参数
+        /// <summary>
+        /// 是否使用GPU；默认false
+        /// </summary>
+        [field: MarshalAs(UnmanagedType.I1)] 
+		public bool use_gpu { get; set; } = false;
 		/// <summary>
 		/// GPU id，使用GPU时有效；默认0;
 		/// </summary>
@@ -38,29 +38,34 @@ namespace PaddleOCRSharp
 		/// 申请的GPU内存;默认4000
 		/// </summary>
 		public int gpu_mem { get; set; } = 4000;
+
 		/// <summary>
 		/// CPU预测时的线程数，在机器核数充足的情况下，该值越大，预测速度越快；默认10
 		/// </summary>
-		public int numThread { get; set; } = 10;
+		public int cpu_math_library_num_threads { get; set; } = 10;
 		/// <summary>
 		/// 是否使用mkldnn库；默认true
 		/// </summary>
-		public byte Enable_mkldnn { get; set; } = 1;
-		#endregion
+		[field:MarshalAs(UnmanagedType.I1)]
+		public bool enable_mkldnn { get; set; } =true;
+        #endregion
 
-		#region 前向相关
-		/// <summary>
-		///是否执行文字检测；默认true 
-		/// </summary>
-		public byte det { get; set; } = 1;
-		/// <summary>
-		/// 是否执行文字识别；默认true
-		/// </summary>
-		public byte rec { get; set; } = 1;
-		/// <summary>
-		/// 是否执行文字方向分类；默认false
-		/// </summary>
-		public byte cls { get; set; } = 0;
+        #region 前向相关
+        /// <summary>
+        ///是否执行文字检测；默认true 
+        /// </summary>
+        [field: MarshalAs(UnmanagedType.I1)] 
+		public bool det { get; set; } = true;
+        /// <summary>
+        /// 是否执行文字识别；默认true
+        /// </summary>
+        [field: MarshalAs(UnmanagedType.I1)] 
+		public bool rec { get; set; } = true;
+        /// <summary>
+        /// 是否执行文字方向分类；默认false
+        /// </summary>
+        [field: MarshalAs(UnmanagedType.I1)] 
+		public bool cls { get; set; } = false;
 		#endregion
 
 		#region 检测模型相关
@@ -68,41 +73,45 @@ namespace PaddleOCRSharp
 		/// <summary>
 		/// 输入图像长宽大于960时，等比例缩放图像，使得图像最长边为960,；默认960
 		/// </summary>
-		public int MaxSideLen { get; set; } = 960;
+		public int max_side_len { get; set; } = 960;
 		/// <summary>
 		/// 用于过滤DB预测的二值化图像，设置为0.-0.3对结果影响不明显；默认0.3
 		/// </summary>
-		public float BoxThresh { get; set; } = 0.3f;
+		public float det_db_thresh { get; set; } = 0.3f;
 		/// <summary>
 		/// DB后处理过滤box的阈值，如果检测存在漏框情况，可酌情减小；默认0.5
 		/// </summary>
-		public float BoxScoreThresh { get; set; } = 0.5f;
+		public float det_db_box_thresh { get; set; } = 0.5f;
 		/// <summary>
 		/// 表示文本框的紧致程度，越小则文本框更靠近文本;默认1.6
 		/// </summary>
-		public float UnClipRatio { get; set; } = 1.6f;
+		public float det_db_unclip_ratio { get; set; } = 1.6f;
 		/// <summary>
 		/// 是否在输出映射上使用膨胀,默认false
 		/// </summary>
-		public byte use_dilation { get; set; } = 0;
+		[field: MarshalAs(UnmanagedType.I1)] 
+		public bool use_dilation { get; set; } = false;
 		/// <summary>
 		/// 1:使用多边形框计算bbox score，0:使用矩形框计算。矩形框计算速度更快，多边形框对弯曲文本区域计算更准确。
 		/// </summary>
-		public byte det_db_score_mode { get; set; } = 1;
+		[field: MarshalAs(UnmanagedType.I1)]	
+		public bool det_db_score_mode { get; set; } = true;
 		/// <summary>
 		/// 是否对结果进行可视化，为1时，预测结果会保存在output字段指定的文件夹下和输入图像同名的图像上。默认false
 		/// </summary>
-		public byte visualize { get; set; } = 0;
-		#endregion
+		
+		[field: MarshalAs(UnmanagedType.I1)] 
+		public bool visualize { get; set; } = false;
 
+        #endregion
 
+        #region 方向分类器相关
 
-		#region 方向分类器相关
-
-		/// <summary>
-		/// 是否使用方向分类器,默认false
-		/// </summary>
-		public byte use_angle_cls { get; set; } = 0;
+        /// <summary>
+        /// 是否使用方向分类器,默认false
+        /// </summary>
+        [field: MarshalAs(UnmanagedType.I1)] 
+		public bool use_angle_cls { get; set; } = false;
 		/// <summary>
 		/// 方向分类器的得分阈值，默认0.9
 		/// </summary>
@@ -131,8 +140,16 @@ namespace PaddleOCRSharp
 		/// <summary>
 		/// 是否显示预测结果，默认false
 		/// </summary>
-		public byte show_img_vis { get; set; } = 0;
-	}
+		[field: MarshalAs(UnmanagedType.I1)] 
+		public bool show_img_vis { get; set; } = false;
+
+        /// <summary>
+        /// 使用GPU预测时，是否启动tensorrt，默认false
+        /// </summary>
+
+        [field: MarshalAs(UnmanagedType.I1)]
+        public bool use_tensorrt { get; set; } = false;
+    }
 }
 
 
