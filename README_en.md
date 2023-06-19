@@ -22,7 +22,7 @@ The project currently supports the following net frameworks:
 ```
 net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;
 netstandard2.0;netcoreapp3.1;
-net5.0;net6.0;
+net5.0;net6.0;net7.0;
 
 ```
 
@@ -91,24 +91,14 @@ var imagebyte = File.ReadAllBytes(ofd.FileName);
 ## 2、Folder structure
 
 ```
-PaddleOCR                    //PaddleOCR.dll  source code folder
-|--cpp                       //PaddleOCR.dll  Cpp source code
-|--include                   //PaddleOCR.dll .h  source code
 
-PaddleOCRLib                 // the  files to need  on the  runtime  
-|--inference                 // lite models for the  Chinese characters
-|--libiomp5md.dll            // 
-|--mkldnn.dll                // 
-|--mklml.dll                 // 
-|--opencv_world411.dll       // 
-|--paddle_inference.dll      //
-|--PaddleOCR.dll             //
 PaddleOCRSharp               //.NET library
 PaddleOCRDemo                //Demo folder
 |--Cpp                       //Cpp folder
 |--PaddleOCRCppDemo          //C++ demo
 |--PaddleOCRSharpDemo        //.NET demo
-|--WebAPIDemo                //.NET WebAPI demo
+|--Python                    //Python demo
+|--Go                        //Go demo
 
 ```
 
@@ -122,7 +112,7 @@ See Microsoft documentation for specific framework description[Target framework 
  <TargetFrameworks>
 net35;net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;
 netstandard2.0;netcoreapp3.1;
-net5.0;net6.0;
+net5.0;net6.0;net7.0;
 </TargetFrameworks>
 ```
 
