@@ -1,6 +1,8 @@
-### 简体中文 | [English](https://github.com/raoyutian/PaddleOCRSharp/blob/main/README_en.md)     |[更新记录](github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update.md)
+### 简体中文 | [English](https://github.com/raoyutian/PaddleOCRSharp/blob/main/README_en.md)     |[更新记录](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_update.md)
 
 #### 如果对你有用或者喜欢，那就给颗星赞，点个赞。谢谢！
+
+#### 最新代码在 https://gitee.com/raoyutian/paddle-ocrsharp
 
 ## 介绍
 -----
@@ -55,7 +57,7 @@ PaddleOCRDemo                //该文件夹包含OCR示例Demo文件夹
 
 #### 3. .NET版编译
 
-[.NET版编译](github.com/raoyutian/PaddleOCRSharp/blob/main/doc/Csharp.md) 
+[.NET版编译](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/Csharp.md) 
 
 
 
@@ -64,11 +66,11 @@ PaddleOCRDemo                //该文件夹包含OCR示例Demo文件夹
 
 #### 1. 在C++中使用PaddleOCR
 
-[在C++中使用PaddleOCR](github.com/raoyutian/PaddleOCRSharp/blob/main/doc/UseInCpp.md) 
+[在C++中使用PaddleOCR](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/UseInCpp.md) 
 
 #### 2. 在.NET中使用PaddleOCRSharp
 
-[在.NET中使用PaddleOCRSharp](github.com/raoyutian/PaddleOCRSharp/blob/main/doc/UseInCsharp.md) 
+[在.NET中使用PaddleOCRSharp](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/UseInCsharp.md) 
 
 ## 模型
 ------
@@ -115,7 +117,7 @@ OCR识别模型库支持官方所有的模型，也支持自己训练的模型�
 
 ## 常见问题与解决方案
 
-[常见问题与解决方案](github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_question.md)
+[常见问题与解决方案](https://github.com/raoyutian/PaddleOCRSharp/blob/main/doc/README_question.md)
 
 ##  技术交流方式
 ------
