@@ -75,7 +75,7 @@ var imagebyte = File.ReadAllBytes(ofd.FileName);
     MessageBox.Show(ocrResult.Text,"Recognition results");
  }
 
-//When OCR is no longer used, please release paddlecrengine
+//When OCR is no longer used, please release paddleocrengine
 
 ```
 
