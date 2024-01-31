@@ -23,7 +23,7 @@ namespace PaddleOCRSharpDemo
        
         private string[] bmpFilters = new string[] { ".bmp", ".jpg", ".jpeg", ".tiff", ".tif", ".png" };
         private string fileFilter = "*.*|*.bmp;*.jpg;*.jpeg;*.tiff;*.tiff;*.png";
-        private string title = "PaddleOCR C# Demo 绿色版 by 饶玉田 QQ群：318860399，定制开发QQ:277784829";
+        private string title = "PaddleOCR C#";
         private PaddleOCREngine engine;
         private PaddleStructureEngine structengine;
         Bitmap bmp;
